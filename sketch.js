@@ -1,23 +1,28 @@
 var cody
 var game
+var branch1
 
 function preload(){
-  //var arrow_img = loadImage("./images/left_arrow.png")
+  branch1 = loadImage("images/branch1.png")
 }
+
 
 function setup() {
   createCanvas(innerWidth, innerHeight - 1)
   cody = new Squirrel(innerWidth/2, 500)
   game = new Game()
+  
 
 }
 
 function draw() {
-  print("NEW FRAME")
+  console.log("NEW FRAME")
   background(150)
   cody.jump()
   game.display()
   cody.display()
+
+
 }
 
 function keyPressed(){

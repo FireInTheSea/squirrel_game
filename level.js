@@ -22,7 +22,7 @@ class Level{
     }
 
     load_level1(){
-        this.grid[990][10] = new Branch(this.grid, this.grid_size, 990, 10, 3, 'right')
+        this.grid[990][10] = new Branch(this.grid, this.grid_size, 990, 10, 3, 'right', branch1)
     }
 
     display_grid(){
@@ -37,9 +37,9 @@ class Level{
     display_objects(){
         for(let col = 0; col < 24; col ++){
             for(let row = 0; row < this.grid_width; row ++){
-                if(this.grid[this.grid_view + col][row] instanceof Array){
-                    print("is array")
-                this.grid[this.grid_view + col][row][0].display(this.grid_view, this.grid_size, this.x_offset)
+                if(this.grid[this.grid_view + col][row] instanceof Branch){
+                    console.log("got branch at", this.grid_view + col, row)
+                    this.grid[this.grid_view + col][row].display(this.grid_view, this.grid_size, this.x_offset, this.grid_view + col, row)
                }
             }
         }

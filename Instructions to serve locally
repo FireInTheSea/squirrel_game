@@ -1,0 +1,4 @@
+1. Run python -m SimpleHTTPServer
+2. Move all the p5 files into the directory your running python on.
+3. Go to localhost:8000
+4. Refresh the page and hopefully the images show up.

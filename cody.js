@@ -20,7 +20,6 @@ class Squirrel {
     }*/
 
     display(){
-        //image(this.background, 0, 0)
         fill(0, 255, 255)
         ellipse(this.x, this.y, this.width, this.height)
     }

@@ -1,5 +1,5 @@
 class Branch{
-    constructor(grid, grid_size, base_col, base_row, height_in_cols, direction, image = null){
+    constructor(grid, grid_size, base_col, base_row, height_in_cols, direction, image){
         this.grid = grid
         this.grid_size = grid_size
         this.col = base_col
@@ -11,7 +11,7 @@ class Branch{
         this.img_col = this.col - this.size
 
         if(this.direction === "right"){
-            this.img_row = this.row + this.size * this.angle
+            this.img_row = this.row 
         }
         else{
             this.img_row = this.row - this.size * this.angle
@@ -27,15 +27,14 @@ class Branch{
                 }
             }
         }
-
-        
     }
 
     display(grid_view, grid_size, x_offset, col, row){
-        if(){
-            
-        }
-        
+        if(col === this.col && row === this.row){
+            this.img.resize(this.size * this.grid_size * this.angle, this.size * this.grid_size)
+            //image(this.img, this.img_row * grid_size + x_offset, (this.img_col - grid_view) * grid_size)
+        fill(200, 200, 50)
+        } 
+        rect(row * this.grid_size + x_offset, (col - grid_view) * this.grid_size, this.grid_size, this.grid_size)
     }
-
 }
