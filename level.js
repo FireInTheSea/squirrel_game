@@ -23,6 +23,7 @@ class Level{
 
     load_level1(){
         this.grid[990][10] = new Branch(this.grid, this.grid_size, 990, 10, 3, 'right', branch1)
+        this.grid[980][20] = new Branch(this.grid, this.grid_size, 980, 20, 2, 'left', branch1)
     }
 
     display_grid(){

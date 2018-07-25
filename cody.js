@@ -1,16 +1,13 @@
 class Squirrel {
-    constructor(x, y) {
-        this.x = x
-        this.y = y
+    constructor(left_x, bottom_y) {
+        this.x = left_x
+        this.y = bottom_y
         this.width = 40
         this.height = 40
         this.motion = null
         this.path_startX = this.x
         this.path_startY = this.y
-        /*
-        this.endX = this.startX + this.width / 2
-        this.endY = this.startY + this.height
-        */
+    
     }  
 
   
@@ -21,7 +18,7 @@ class Squirrel {
 
     display(){
         fill(0, 255, 255)
-        ellipse(this.x, this.y, this.width, this.height)
+        rect(this.x, this.y -  this.height, this.width, this.height)
     }
 
     jump(){
