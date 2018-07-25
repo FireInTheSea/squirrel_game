@@ -16,9 +16,8 @@ function setup() {
 }
 
 function draw() {
-  //console.log("NEW FRAME")
   background(150)
-  cody.jump()
+  cody.move()
   game.display()
   cody.display()
 
@@ -27,7 +26,7 @@ function draw() {
 
 function keyPressed(){
   if(key === " "){
-    cody.motion = "jumping"
+    cody.motion = "jump"
   }
 }
     
