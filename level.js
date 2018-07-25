@@ -1,6 +1,6 @@
 class Level{
     constructor(grid_height){
-        this.grid_size = (innerHeight -1 )/24
+        this.grid_size = innerHeight/24
         this.grid_height = grid_height
         this.grid_width = 30
         this.grid = []
@@ -39,7 +39,6 @@ class Level{
         for(let col = 0; col < 24; col ++){
             for(let row = 0; row < this.grid_width; row ++){
                 if(this.grid[this.grid_view + col][row] instanceof Branch){
-                    console.log("got branch at", this.grid_view + col, row)
                     this.grid[this.grid_view + col][row].display(this.grid_view, this.grid_size, this.x_offset, this.grid_view + col, row)
                }
             }

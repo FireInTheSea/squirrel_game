@@ -2,8 +2,8 @@ class Squirrel {
     constructor(left_x, bottom_y) {
         this.x = left_x
         this.y = bottom_y
-        this.width = 40
-        this.height = 40
+        this.width = 80
+        this.height = 140
         this.motion = null
         this.path_startX = this.x
         this.path_startY = this.y

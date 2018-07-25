@@ -22,14 +22,12 @@ class Branch{
             if(this.direction === "right"){
                 for(let r = 0; r < this.angle; r++){
                     this.grid[this.col - c][index_row + r] = this
-                    print("added grid pointer at", this.col - c, index_row + r)
                 }
                 index_row += this.angle
             }
             else{
                 for(let r = 0; r < this.angle; r++){
                     this.grid[this.col - c][index_row - r] = this
-                    print("added grid pointer at", this.col - c, index_row - r)
                 }
                 index_row -= this.angle
             }
@@ -43,7 +41,5 @@ class Branch{
         } 
         fill(200, 200, 50)
         rect(row * this.grid_size + x_offset, (col - grid_view) * this.grid_size, this.grid_size, this.grid_size)
-        console.log("row coord:", row, "row pixels:", row * this.grid_size + x_offset)
-        console.log("col coords:", col, "col pixels:", (col - grid_view) * this.grid_size)
     }
 }

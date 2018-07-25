@@ -8,8 +8,7 @@ function preload(){
 
 
 function setup() {
-  createCanvas(innerWidth, innerHeight - 1)
-  console.log(innerWidth)
+  createCanvas(innerWidth, innerHeight - 4)
   cody = new Squirrel(innerWidth/2, 500)
   game = new Game()
   
