@@ -17,14 +17,21 @@ class Branch{
             this.img_row = this.row - this.size * this.angle
         }
 
-        for(let col_change = 0; col_change < this.size; col_change ++){
-            for(let row_change = 0; row_change < 5; row_change ++){
-                if(this.direction === "right"){
-                    this.grid[this.col - col_change][this.row + row_change] = this
+        let index_row = this.row
+        for(let c = 0; c < this.size; c++){
+            if(this.direction === "right"){
+                for(let r = 0; r < this.angle; r++){
+                    this.grid[this.col - c][index_row + r] = this
+                    print("added grid pointer at", this.col - c, index_row + r)
                 }
-                else{
-                    this.grid[this.col - col_change][this.row - row_change] = this
+                index_row += this.angle
+            }
+            else{
+                for(let r = 0; r < this.angle; r++){
+                    this.grid[this.col - c][index_row - r] = this
+                    print("added grid pointer at", this.col - c, index_row - r)
                 }
+                index_row -= this.angle
             }
         }
     }
@@ -36,5 +43,7 @@ class Branch{
         fill(200, 200, 50)
         } 
         rect(row * this.grid_size + x_offset, (col - grid_view) * this.grid_size, this.grid_size, this.grid_size)
+        console.log("row coord:", row, "row pixels:", row * this.grid_size + x_offset)
+        console.log("col coords:", col, "col pixels:", (col - grid_view) * this.grid_size)
     }
 }

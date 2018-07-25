@@ -9,6 +9,7 @@ function preload(){
 
 function setup() {
   createCanvas(innerWidth, innerHeight - 1)
+  console.log(innerWidth)
   cody = new Squirrel(innerWidth/2, 500)
   game = new Game()
   
@@ -16,7 +17,7 @@ function setup() {
 }
 
 function draw() {
-  console.log("NEW FRAME")
+  //console.log("NEW FRAME")
   background(150)
   cody.jump()
   game.display()
