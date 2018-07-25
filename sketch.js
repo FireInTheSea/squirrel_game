@@ -1,4 +1,3 @@
-var cody
 var game
 var branch1
 
@@ -9,7 +8,6 @@ function preload(){
 
 function setup() {
   createCanvas(innerWidth, innerHeight - 4)
-  cody = new Squirrel(innerWidth/2, 500)
   game = new Game()
   
 
@@ -17,16 +15,14 @@ function setup() {
 
 function draw() {
   background(150)
-  cody.move()
-  game.display()
-  cody.display()
-
+  game.run()
 
 }
 
 function keyPressed(){
-  if(key === " "){
-    cody.motion = "jump"
+  if(key === " "  && game.current_level.squirrel.jupms_since_land < 2 && game.current_level.squirrel.motion != "jump"){
+    game.current_level.squirrel.motion = "jump"
+    game.current_level.squirrel.jupms_since_land += 1
   }
 }
     

@@ -30,12 +30,12 @@ class Squirrel {
         rect(this.x, this.y -  this.height, this.width, this.height)
     }
 
-    move(){
+    move(is_on_branch){
         if(this.motion === "jump"){
             this.jump()
         }
         else if(this.motion === "fall"){
-            this.fall()
+            this.fall(is_on_branch)
         }
     }
 
@@ -59,8 +59,20 @@ class Squirrel {
         
     }
 
-    fall(){
-        //if not on branch go down
+    fall(is_on_branch){
+        if(is_on_branch === true){
+            this.motion = null
+        }
+        else{
+            this.y += this.fall_speed_y
+            if(keyIsDown(LEFT_ARROW)){
+                this.x -= this.fly_speed_x
+            }
+            if (keyIsDown(RIGHT_ARROW)){
+                this.x += this.fly_speed_x
+            }
+            
+        }
     }
 }
 

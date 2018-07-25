@@ -1,5 +1,7 @@
 class Level{
     constructor(grid_height){
+        this.lives = 3
+        this.squirrel = new Squirrel(500, 500)
         this.grid_size = innerHeight/24
         this.grid_height = grid_height
         this.grid_width = 30
@@ -10,15 +12,6 @@ class Level{
         }
         this.grid_view = this.grid_height - 24
         this.x_offset = innerWidth/2 - this.grid_size * this.grid_width/2
-    }
-
-    add_5_branches(direction, col1, row1, size1, col2, row2, size2, col3, row3, size3, col4, row4, size4, col5, row5, size5){
-        //this.grid[col1][row1] = new Branch(this.grid, this.grid_size, col1, row1, size1, direction)
-        //this.grid[col2][row2] = new Branch(this.grid, this.grid_size, col2, row2, size2, direction)
-        //this.grid[col3][row3] = new Branch(this.grid, this.grid_size, col3, row3, size3, direction)
-        //this.grid[col4][row4] = new Branch(this.grid, this.grid_size, col4, row4, size4, direction)
-        //this.grid[col5][row5] = new Branch(this.grid, this.grid_size, col5, row5, size5, direction)
-
     }
 
     load_level1(){
@@ -43,5 +36,48 @@ class Level{
                }
             }
         }
+    }
+
+    display_squirrel(){
+        this.squirrel.display()
+    }
+
+    display_all(){
+        this.display_grid()
+        this.display_objects()
+        this.display_squirrel()
+    }
+
+    find_squirrel(){
+        this.squirrel_col = floor(this.squirrel.y/this.grid_size + this.grid_view)
+        this.squirrel_row = floor((this.squirrel.x - this.x_offset)/this.grid_size)
+    }
+
+    squirrel_on_branch(){
+        this.find_squirrel()
+        if(this.grid[this.squirrel_col][this.squirrel_row] instanceof Branch){
+            this.squirrel.jupms_since_land = 0
+            return true
+        }
+        return false
+    }
+
+    move_squirrel(){
+        this.squirrel.move(this.squirrel_on_branch())
+        //if squirrel is_on_enemy is false
+            //if motion is not null
+                //squirrel.move(is_on_branch?)
+    }
+
+    run(){
+        console.log(this.squirrel.jupms_since_land)
+        this.find_squirrel()
+        if(this.squirrel_col > this.grid_view + 24){
+            this.lives -= 1
+        }
+        else if(this.squirrel_row >= 0 && this.squirrel_row <= this.grid_width){
+            this.move_squirrel()
+        }
+        this.display_all()
     }
 }
