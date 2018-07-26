@@ -20,9 +20,11 @@ function draw() {
 }
 
 function keyPressed(){
-  if(key === " "  && game.current_level.squirrel.jupms_since_land < 2 && game.current_level.squirrel.motion != "jump"){
-    game.current_level.squirrel.motion = "jump"
+  if(key === " "  && game.current_level.squirrel.jupms_since_land < 2 ){
     game.current_level.squirrel.jupms_since_land += 1
+    game.current_level.squirrel.motion = "jump"
+    game.current_level.squirrel.rise_since_jump = 0
   }
+
 }
     

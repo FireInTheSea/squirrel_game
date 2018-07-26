@@ -11,14 +11,14 @@ class Squirrel {
     set_moition_rules(){
         this.motion = null
 
-        this.fly_speed_x = 4
+        this.fly_speed_x = 6
 
         this.jupms_since_land = 0
-        this.max_jump_height = 100
-        this.jump_speed_y = 5
+        this.max_jump_height = 200
+        this.jump_speed_y = 8
         this.rise_since_jump = 0
         
-        this.fall_speed_y = 8
+        this.fall_speed_y = 10
 
         this.walk_speed_x = 4
 
@@ -30,12 +30,17 @@ class Squirrel {
         rect(this.x, this.y -  this.height, this.width, this.height)
     }
 
-    move(is_on_branch){
+    move(){
         if(this.motion === "jump"){
             this.jump()
         }
         else if(this.motion === "fall"){
-            this.fall(is_on_branch)
+            if(this.is_on_branch === true){
+                this.motion = null
+            }
+            else{
+                this.fall()
+            }
         }
     }
 
@@ -52,27 +57,22 @@ class Squirrel {
         }
         else{
             this.motion = "fall"
-            this.jupms_since_land += 1
             this.rise_since_jump = 0
         }
         
         
     }
 
-    fall(is_on_branch){
-        if(is_on_branch === true){
-            this.motion = null
+    fall(){
+        this.y += this.fall_speed_y
+        if(keyIsDown(LEFT_ARROW)){
+            this.x -= this.fly_speed_x
         }
-        else{
-            this.y += this.fall_speed_y
-            if(keyIsDown(LEFT_ARROW)){
-                this.x -= this.fly_speed_x
-            }
-            if (keyIsDown(RIGHT_ARROW)){
-                this.x += this.fly_speed_x
-            }
+        if (keyIsDown(RIGHT_ARROW)){
+            this.x += this.fly_speed_x
+        }
             
-        }
+        
     }
 }
 

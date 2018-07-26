@@ -49,34 +49,34 @@ class Level{
     }
 
     find_squirrel(){
-        this.squirrel_col = floor(this.squirrel.y/this.grid_size + this.grid_view)
-        this.squirrel_row = floor((this.squirrel.x - this.x_offset)/this.grid_size)
+        this.squirrel.bottom_col = floor(this.squirrel.y/this.grid_size + this.grid_view)
+        this.squirrel.top_col = floor((this.squirrel.y - this.squirrel.height)/this.grid_size + this.grid_view)
+        this.squirrel.left_row = floor((this.squirrel.x - this.x_offset)/this.grid_size)
+        this.squirrel.right_row = floor((this.squirrel.x + this.squirrel.width - this.x_offset)/this.grid_size)
     }
 
     squirrel_on_branch(){
         this.find_squirrel()
-        if(this.grid[this.squirrel_col][this.squirrel_row] instanceof Branch){
-            this.squirrel.jupms_since_land = 0
-            return true
+        if(this.squirrel.motion != "jump"){
+            if(this.grid[this.squirrel.bottom_col][this.squirrel.left_row] instanceof Branch || this.grid[this.squirrel.bottom_col][this.squirrel.right_row] instanceof Branch){
+                this.squirrel.jupms_since_land = 0
+                console.log("ZEROED jumps_since_land in Level.squirrel_on_branch")
+                this.squirrel.is_on_branch = true
+            }
+            else{
+                this.squirrel.is_on_branch = false
+            }
         }
-        return false
     }
-
-    move_squirrel(){
-        this.squirrel.move(this.squirrel_on_branch())
-        //if squirrel is_on_enemy is false
-            //if motion is not null
-                //squirrel.move(is_on_branch?)
-    }
-
+  
     run(){
-        console.log(this.squirrel.jupms_since_land)
         this.find_squirrel()
-        if(this.squirrel_col > this.grid_view + 24){
+        if(this.squirrel.bottom_col > this.grid_view + 24 - 1){
             this.lives -= 1
         }
-        else if(this.squirrel_row >= 0 && this.squirrel_row <= this.grid_width){
-            this.move_squirrel()
+        else if(this.squirrel.left_row >= 0 && this.squirrel.right_row <= this.grid_width){
+            this.squirrel_on_branch()
+            this.squirrel.move()
         }
         this.display_all()
     }
