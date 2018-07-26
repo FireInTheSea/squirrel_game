@@ -11,18 +11,16 @@ class Squirrel {
     set_moition_rules(){
         this.motion = null
 
-        this.fly_speed_x = 6
+        this.fly_speed_x = 2 * innerHeight/100
 
         this.jupms_since_land = 0
         this.max_jump_height = 200
-        this.jump_speed_y = 8
+        this.jump_speed_y = 2 * innerHeight/100
         this.rise_since_jump = 0
         
-        this.fall_speed_y = 10
+        this.fall_speed_y = 3 * innerHeight/100
 
         this.walk_speed_x = 4
-
-        //this.walk_speed_y = ? (calculate based on branch.angle)
     }
 
     display(){
@@ -46,8 +44,14 @@ class Squirrel {
 
     jump(){
         if(this.rise_since_jump < this.max_jump_height){
-            this.y -= this.jump_speed_y
-            this.rise_since_jump += this.jump_speed_y
+            if(this.rise_since_jump < 0.9 * this.max_jump_height){
+                this.y -= this.jump_speed_y
+                this.rise_since_jump += this.jump_speed_y
+            }
+            else{
+                this.y -= this.jump_speed_y/2
+                this.rise_since_jump += this.jump_speed_y/2
+            }
             if(keyIsDown(LEFT_ARROW)){
                 this.x -= this.fly_speed_x
             }
