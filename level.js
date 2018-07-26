@@ -25,34 +25,10 @@ class Level{
         for(let col = 0; col < 24; col ++){
             for(let row = 0; row < this.grid_width; row ++){
                 rect(row * this.grid_size + this.x_offset, col * this.grid_size, this.grid_size, this.grid_size)
-                stroke('red')
-                ellipse(row * this.grid_size + this.x_offset, col * this.grid_size, 3, 3)
-                stroke('black')
             }
         }
     }
 
-    get_y_plot1(x_plot, branch){
-        let slope
-        let y_adjust
-        if(branch.direction === "right"){
-            slope = -1/branch.angle
-            y_adjust = branch.row/branch.angle //y intercept in cols relative to branch.col
-            y_adjust ++ // to plot from bottom of square
-        }
-        else{
-            slope = 1/branch.angle
-            y_adjust = - branch.row/branch.angle
-        }
-        let y_intercept_col = branch.col + y_adjust
-        let y_intercept_col_in_screen = (y_intercept_col - this.grid_view)
-        let y_intercept_pixel = y_intercept_col_in_screen * this.grid_size
-        let y_plot = slope * x_plot + y_intercept_pixel
-        fill('purple')
-        ellipse(x_plot, y_intercept_pixel, 3, 3)
-        fill('black')
-        return y_plot
-    }
 
     get_y_plot(x_plot, branch){
         let y1_col
@@ -73,22 +49,14 @@ class Level{
             x2_row =  branch.row - branch.size * branch.angle + 1
         }
 
-        console.log(y1_col, x1_row, y2_col, x2_row)
-
         let slope_by_coords = (y2_col - y1_col) / (x2_row - x1_row)
 
         let y1_px = y1_col * this.grid_size
         let y2_px = y2_col * this.grid_size
         let x1_px = x1_row * this.grid_size + this.x_offset
         let x2_px = x2_row * this.grid_size + this.x_offset
-        console.log(x1_px, y1_px, x2_px, y2_px)
-        let slope = (branch.direction === "right") ? -0.2 : 0.2
 
-        //let y_plot = slope_by_coords * (x_plot - x1_px) + y1_px
-
-
-        let y_plot = slope * (x_plot - x2_px) + y2_px
-        print("Y Plot: " + y_plot)
+        let y_plot = slope_by_coords * (x_plot - x2_px) + y2_px
 
         return y_plot
     }
@@ -98,8 +66,7 @@ class Level{
             for(let row = 0; row < this.grid_width; row ++){
                 if(this.grid[this.grid_view + col][row] instanceof Branch){
                     this.grid[this.grid_view + col][ row].display(this.grid_view, this.grid_size, this.x_offset, this.grid_view + col, row)
-                    for(let x_plot = row * this.grid_size + this.x_offset; x_plot < (row + 1) * this.grid_size + this.x_offset; x_plot += 1){
-                        console.log("X_Plot: " + x_plot)
+                    for(let x_plot = row * this.grid_size + this.x_offset; x_plot < (row + 1) * this.grid_size + this.x_offset; x_plot += 10){
                         ellipse(x_plot, this.get_y_plot(x_plot, this.grid[this.grid_view + col][row]), 1, 1)
 
                     }
