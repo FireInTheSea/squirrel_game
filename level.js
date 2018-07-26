@@ -60,7 +60,6 @@ class Level{
         if(this.squirrel.motion != "jump"){
             if(this.grid[this.squirrel.bottom_col][this.squirrel.left_row] instanceof Branch || this.grid[this.squirrel.bottom_col][this.squirrel.right_row] instanceof Branch){
                 this.squirrel.jupms_since_land = 0
-                console.log("ZEROED jumps_since_land in Level.squirrel_on_branch")
                 this.squirrel.is_on_branch = true
             }
             else{
