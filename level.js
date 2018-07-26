@@ -2,15 +2,17 @@ class Level{
     constructor(grid_height){
         this.lives = 3
         this.squirrel = new Squirrel(innerWidth/2, innerHeight/2)
-        this.grid_size = (innerHeight - 4)/24
         this.grid_height = grid_height
-        this.grid_width = 30
+        this.grid_width = 65
+        this.visible_grid_height = 50
+        this.grid_size = (innerHeight - 4)/this.visible_grid_height
         this.grid = []
         let add_col_num
         for(add_col_num = 0; add_col_num < this.grid_height; add_col_num ++){
             this.grid[add_col_num] = new Array(this.grid_width)
         }
-        this.grid_view = this.grid_height - 24
+        this.grid_view = this.grid_height - this.visible_grid_height
+        console.log(this.visible_grid_height, this.grid_view)
         this.x_offset = innerWidth/2 - this.grid_size * this.grid_width/2
     }
 
@@ -22,7 +24,7 @@ class Level{
 
     display_grid(){
         fill(0, 255, 0)
-        for(let col = 0; col < 24; col ++){
+        for(let col = 0; col < this.visible_grid_height; col ++){
             for(let row = 0; row < this.grid_width; row ++){
                 rect(row * this.grid_size + this.x_offset, col * this.grid_size, this.grid_size, this.grid_size)
             }
@@ -62,7 +64,7 @@ class Level{
     }
 
     display_objects(){
-        for(let col = 0; col < 24; col ++){
+        for(let col = 0; col < this.visible_grid_height; col ++){
             for(let row = 0; row < this.grid_width; row ++){
                 if(this.grid[this.grid_view + col][row] instanceof Branch){
                     this.grid[this.grid_view + col][ row].display(this.grid_view, this.grid_size, this.x_offset, this.grid_view + col, row)
@@ -107,7 +109,7 @@ class Level{
   
     run(){
         this.find_squirrel()
-        if(this.squirrel.bottom_col > this.grid_view + 24 - 1){
+        if(this.squirrel.bottom_col > this.grid_view + this.visible_grid_height - 1){
             this.lives -= 1
             this.squirrel.y = innerHeight/2
             this.squirrel.x = innerWidth/2
