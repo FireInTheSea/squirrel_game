@@ -38,8 +38,8 @@ class Level{
         let test_row_length = this.squirrel.width_in_rows
         for(let test_col = test_start_col;  test_col < test_start_col + 10; test_col ++){
             for(let test_row = test_start_row; test_row < test_start_row + test_row_length; test_row ++){
-                fill("pink")
-                rect(test_row * this.grid_size + this.x_offset, (test_col - this.grid_view) * this.grid_size, this.grid_size, this.grid_size)
+                //fill("pink")
+                //rect(test_row * this.grid_size + this.x_offset, (test_col - this.grid_view) * this.grid_size, this.grid_size, this.grid_size)
                 if(this.grid[test_col][test_row] instanceof Branch){
                     return true
                 }
@@ -158,18 +158,35 @@ class Level{
             this.squirrel.y = innerHeight/2
             this.squirrel.x = innerWidth/2
         }
-        else if(this.hit_enemy === true){
+        else if(this.hit_enemy() === true){
             this.lives -= 1
             this.squirrel.y = innerHeight/2
             this.squirrel.x = innerWidth/2
         }
         else{
-            this.squirrel_on_branch()
-            this.squirrel.move()
+            if(this.squirrel.motion === "fall"){
+                if(this.predict_land() === true){
+                    this.squirrel.motion = "land"
+                }
+                else{
+                    this.squirrel.fall()
+                }
+            }
+            if(this.squirrel.motion === "land"){
+                this.squirrel.land()
+            }
+            if(this.squirrel.motion === "jump"){
+                this.squirrel.jump()
+            }
+            if(this.squirrel.motion === "walk"){
+                this.squirrel.walk()
+            }
+            if(this.squirrel.motion === null){
+                //break branch
+            }
         }
 
         this.display_all()
-        this.predict_land()
 
     }
 }

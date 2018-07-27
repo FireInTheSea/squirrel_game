@@ -22,7 +22,6 @@ function draw() {
 }
 
 function keyPressed(){
-  console.log(game.current_level.squirrel.max_jumps_since_land)
   if(key === " "  && game.current_level.squirrel.jumps_since_land < game.current_level.squirrel.max_jumps_since_land){
     game.current_level.squirrel.jumps_since_land += 1
     game.current_level.squirrel.motion = "jump"
