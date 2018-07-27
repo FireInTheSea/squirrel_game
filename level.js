@@ -150,43 +150,36 @@ class Level{
         }
         return false
     }
-  
-    run(){
+
+    lethal_fall(){
         this.find_squirrel()
         if(this.squirrel.bottom_col > this.grid_view + this.visible_grid_height - 1){
-            this.lives -= 1
-            this.squirrel.y = innerHeight/2
-            this.squirrel.x = innerWidth/2
+            this.kill()
         }
-        else if(this.hit_enemy() === true){
-            this.lives -= 1
-            this.squirrel.y = innerHeight/2
-            this.squirrel.x = innerWidth/2
-        }
+    }
+
+    kill(){
+        this.lives -= 1
+        this.squirrel.y = innerHeight/2
+        this.squirrel.x = innerWidth/2
+    }
+  
+    run(){
+        if(this.lethal_fall === true) {this.kill()}
+
+        else if(this.hit_enemy() === true) {this.kill()}
+
         else{
             if(this.squirrel.motion === "fall"){
-                if(this.predict_land() === true){
-                    this.squirrel.motion = "land"
-                }
-                else{
-                    this.squirrel.fall()
-                }
+                if(this.predict_land() === true) {this.squirrel.motion = "land"}
+                else {this.squirrel_fall()}
             }
-            if(this.squirrel.motion === "land"){
-                this.squirrel.land()
-            }
-            if(this.squirrel.motion === "jump"){
-                this.squirrel.jump()
-            }
-            if(this.squirrel.motion === "walk"){
-                this.squirrel.walk()
-            }
-            if(this.squirrel.motion === null){
-                //break branch
-            }
+            if(this.squirrel.motion === "jump") {this.squirrel_jump()}
+            if(this.squirrel.motion === "land") {this.squirrel_land()}
+            if(this.squirrel.motion === "walk"){this.squirrel_walk()}
+            if(this.squirrel.motion === null){/*break branch*/}
         }
 
         this.display_all()
-
     }
 }

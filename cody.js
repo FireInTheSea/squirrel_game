@@ -114,7 +114,7 @@ class Squirrel {
         image(this.hit_box_right, this.x, this.y)
     }
 
-    move(){
+    move(){ //in process of being replaced
         if(this.motion === "jump"){
             this.jump()
         }
@@ -128,7 +128,7 @@ class Squirrel {
         }
     }
 
-    jump(){
+    jump(){ //in process of being replaced
         if(this.rise_since_jump < this.max_jump_height){
             if(this.rise_since_jump < 0.9 * this.max_jump_height){
                 this.y -= this.jump_speed_y
@@ -153,7 +153,7 @@ class Squirrel {
         
     }
 
-    fall(){
+    fall(){ //in process of being replaced
         this.y += this.fall_speed_y
         if(keyIsDown(LEFT_ARROW)){
             this.x -= this.fly_speed_x
