@@ -31,6 +31,16 @@ class Level{
         return coords
     }
 
+    get_px_by_coords(x_px, y_px){ //pasted from get coord by px, not functional yet
+        x_px -= this.x_offset
+        let row = floor(x_px/this.grid_size)
+        let col = floor(y_px/this.grid_size)
+        col += this.grid_view
+        
+        let coords = [col, row]
+        return coords
+    }
+
     predict_land(){
         let coords = this.get_coords_by_px(this.squirrel.x, this.squirrel.y)
         let test_start_col = coords[0] + this.squirrel.height_in_cols - 1
@@ -41,7 +51,7 @@ class Level{
                 //fill("pink")
                 //rect(test_row * this.grid_size + this.x_offset, (test_col - this.grid_view) * this.grid_size, this.grid_size, this.grid_size)
                 if(test_col < this.grid_view + this.visible_grid_height && test_row >= 0 && test_row < this.grid_width){
-                    if(this.grid[test_col][test_row] instanceof Branch) {return true}
+                    if(this.grid[test_col][test_row] instanceof Branch) {return [test_col, test_row]}
                 }
             }
             test_row_length ++
@@ -115,7 +125,7 @@ class Level{
         this.display_squirrel()
     }
 
-    find_squirrel(){
+    find_squirrel(){ // depricated
         this.squirrel.bottom_col = floor(this.squirrel.y/this.grid_size + this.grid_view)
         this.squirrel.top_col = floor((this.squirrel.y - this.squirrel.height)/this.grid_size + this.grid_view)
         this.squirrel.left_row = floor((this.squirrel.x - this.x_offset)/this.grid_size)
@@ -165,6 +175,9 @@ class Level{
     }
 
     squirrel_fall(){
+        let branch_coords = this.predict_land()
+        //if
+        //add counter for distance fallen and adjust speed accordingly
         this.squirrel.y += this.squirrel.fall_speed_y
         if(keyIsDown(LEFT_ARROW)){
             this.squirrel.x -= this.squirrel.fly_speed_x
@@ -175,7 +188,13 @@ class Level{
     }
 
     squirrel_land(){
-
+        this.squirrel.y += this.squirrel.fall_speed_y
+        if(keyIsDown(LEFT_ARROW)){
+            this.squirrel.x -= this.squirrel.fly_speed_x
+        }
+        if (keyIsDown(RIGHT_ARROW)){
+            this.squirrel.x += this.squirrel.fly_speed_x
+        }
     }
 
     squirrel_jump(){
@@ -215,7 +234,7 @@ class Level{
 
         else{
             if(this.squirrel.motion === "fall"){
-                if(this.predict_land() === true) {this.squirrel.motion = "land"}
+                if(this.predict_land() != false) {this.squirrel.motion = "land"}
                 else {this.squirrel_fall()}
             }
             if(this.squirrel.motion === "jump") {this.squirrel_jump()}
