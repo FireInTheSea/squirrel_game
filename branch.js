@@ -36,7 +36,7 @@ class Branch{
 
     display(grid_view, grid_size, x_offset, col, row){
         if(col === this.col && row === this.row){
-            this.img.resize(this.size * this.grid_size * this.angle, this.size * this.grid_size)
+            //this.img.resize(this.size * this.grid_size * this.angle, this.size * this.grid_size)
             //image(this.img, this.img_row * grid_size + x_offset, (this.img_col - grid_view) * grid_size)
         } 
         fill(200, 200, 50)

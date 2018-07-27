@@ -12,14 +12,13 @@ class Level{
             this.grid[add_col_num] = new Array(this.grid_width)
         }
         this.grid_view = this.grid_height - this.visible_grid_height
-        console.log(this.visible_grid_height, this.grid_view)
         this.x_offset = innerWidth/2 - this.grid_size * this.grid_width/2
     }
 
     load_level1(){
-        this.grid[990][10] = new Branch(this.grid, this.grid_size, 990, 10, 3, 'right', branch1)
-        this.grid[980][20] = new Branch(this.grid, this.grid_size, 980, 20, 2, 'left', branch1)
-        this.grid[977][9] = new Branch(this.grid, this.grid_size, 977, 9, 2, 'left', branch1)
+        this.grid[953][10] = new Branch(this.grid, this.grid_size, 953, 10, 2, 'left', branch1)
+        this.grid[960][25] = new Branch(this.grid, this.grid_size, 960, 25, 2, 'left', branch1)
+        this.grid[975][40] = new Branch(this.grid, this.grid_size, 975, 40, 3, 'right', branch1)
     }
 
     display_grid(){
@@ -68,7 +67,7 @@ class Level{
             for(let row = 0; row < this.grid_width; row ++){
                 if(this.grid[this.grid_view + col][row] instanceof Branch){
                     this.grid[this.grid_view + col][ row].display(this.grid_view, this.grid_size, this.x_offset, this.grid_view + col, row)
-                    for(let x_plot = row * this.grid_size + this.x_offset; x_plot < (row + 1) * this.grid_size + this.x_offset; x_plot += 10){
+                    for(let x_plot = row * this.grid_size + this.x_offset; x_plot < (row + 1) * this.grid_size + this.x_offset; x_plot += 1){
                         ellipse(x_plot, this.get_y_plot(x_plot, this.grid[this.grid_view + col][row]), 1, 1)
 
                     }
@@ -98,7 +97,7 @@ class Level{
         this.find_squirrel()
         if(this.squirrel.motion != "jump"){
             if(this.grid[this.squirrel.bottom_col][this.squirrel.left_row] instanceof Branch || this.grid[this.squirrel.bottom_col][this.squirrel.right_row] instanceof Branch){
-                this.squirrel.jupms_since_land = 0
+                this.squirrel.jumps_since_land = 0
                 this.squirrel.is_on_branch = true
             }
             else{

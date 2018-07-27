@@ -1,19 +1,45 @@
 class Squirrel {
-    constructor(left_x, bottom_y) {
-        this.x = left_x
-        this.y = bottom_y
+    constructor(center_x, center_y) {
+        this.x = center_x
+        this.y = center_y
         this.width = 80        
         this.height = 140
+
+        this.facing = "right"
+        this.state = "standing"
         
+        this.loadImages()
         this.set_moition_rules()
     } 
+
+    loadImages(){
+        /*this.stand_cycle_right = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        this.stand_cycle_left = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        this.run_cycle_right = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        this.run_cycle_left = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        this.jump_cycle_right = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        this.jump_cycle_left = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        this.fall_cycle_right = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        this.fall_cycle_left = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        this.land_cycle_right = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        this.land_cycle_left = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        this.die_cycle = [loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage(), loadImage()]
+        */
+       //this.hit_box_right = loadImage("/images/hit_box_right.png", this.hit_box_right.resize(10 * innerHeight/100, 8 * innerHeight/100))
+       //this.hit_box_left = loadImage("/images/hit_box_left.png")
+       this.hit_box_right = loadImage("/images/hit_box_right.png", this.resize_squirrel())
+    }
+    resize_squirrel(){
+        this.hit_box_right.resize(200, 100)
+    }
 
     set_moition_rules(){
         this.motion = null
 
         this.fly_speed_x = 2 * innerHeight/100
 
-        this.jupms_since_land = 0
+        this.max_jumps_since_land = 1
+        this.jumps_since_land = 0
         this.max_jump_height = 200
         this.jump_speed_y = 2 * innerHeight/100
         this.rise_since_jump = 0
@@ -24,8 +50,9 @@ class Squirrel {
     }
 
     display(){
-        fill(0, 255, 255)
-        rect(this.x, this.y -  this.height, this.width, this.height)
+        //fill(0, 255, 255)
+        //rect(this.x, this.y -  this.height, this.width, this.height)
+        image(this.hit_box_right, this.x, this.y)
     }
 
     move(){
