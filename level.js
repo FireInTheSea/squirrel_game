@@ -21,8 +21,37 @@ class Level{
         this.grid[975][40] = new Branch(this.grid, this.grid_size, 975, 40, 3, 'right', branch1)
     }
 
+    get_coords_by_px(x_px, y_px){
+        x_px -= this.x_offset
+        let row = floor(x_px/this.grid_size)
+        let col = floor(y_px/this.grid_size)
+        col += this.grid_view
+        
+        let coords = [col, row]
+        return coords
+    }
+
+    predict_land(){
+        let coords = this.get_coords_by_px(this.squirrel.x, this.squirrel.y)
+        let test_start_col = coords[0] + this.squirrel.height_in_cols - 1
+        let test_start_row = coords[1]
+        let test_row_length = this.squirrel.width_in_rows
+        for(let test_col = test_start_col;  test_col < test_start_col + 10; test_col ++){
+            for(let test_row = test_start_row; test_row < test_start_row + test_row_length; test_row ++){
+                fill("pink")
+                rect(test_row * this.grid_size + this.x_offset, (test_col - this.grid_view) * this.grid_size, this.grid_size, this.grid_size)
+                if(this.grid[test_col][test_row] instanceof Branch){
+                    return true
+                }
+            }
+            test_row_length ++
+        }
+        return false
+    }
+
     display_grid(){
         fill(0, 255, 0)
+        stroke("blue")
         for(let col = 0; col < this.visible_grid_height; col ++){
             for(let row = 0; row < this.grid_width; row ++){
                 rect(row * this.grid_size + this.x_offset, col * this.grid_size, this.grid_size, this.grid_size)
@@ -105,6 +134,22 @@ class Level{
             }
         }
     }
+
+    hit_enemy(){
+        this.squirrel.find_hit_boxes()
+        for(let col = 0; col < this.visible_grid_height; col ++){
+            for(let row = 0; row < this.grid_width; row ++){
+                if(this.grid[col][row] instanceof Owl || this.grid[col][row] instanceof Pinecone){
+                    col_px = col * this.grid_size
+                    row_px = row * this.grid_size + this.x_offset
+                    if(this.squirrel.in_hit_box(row_px, col_px, this.squirrel.main_box_start_x, this.squirrel.main_box_start_y, this.squirrel.main_box_end_x, this.squirrel.main_box_start_y) === true){
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
   
     run(){
         this.find_squirrel()
@@ -113,10 +158,18 @@ class Level{
             this.squirrel.y = innerHeight/2
             this.squirrel.x = innerWidth/2
         }
-        else if(this.squirrel.left_row >= 0 && this.squirrel.right_row <= this.grid_width){
+        else if(this.hit_enemy === true){
+            this.lives -= 1
+            this.squirrel.y = innerHeight/2
+            this.squirrel.x = innerWidth/2
+        }
+        else{
             this.squirrel_on_branch()
             this.squirrel.move()
         }
+
         this.display_all()
+        this.predict_land()
+
     }
 }
