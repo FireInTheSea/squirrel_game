@@ -18,7 +18,6 @@ function draw() {
   background(150)
   game.run()
   image(branch1, 500, 500)
-
 }
 
 function keyPressed(){

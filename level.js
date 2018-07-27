@@ -40,8 +40,8 @@ class Level{
             for(let test_row = test_start_row; test_row < test_start_row + test_row_length; test_row ++){
                 //fill("pink")
                 //rect(test_row * this.grid_size + this.x_offset, (test_col - this.grid_view) * this.grid_size, this.grid_size, this.grid_size)
-                if(this.grid[test_col][test_row] instanceof Branch){
-                    return true
+                if(test_col < this.grid_view + this.visible_grid_height && test_row >= 0 && test_row < this.grid_width){
+                    if(this.grid[test_col][test_row] instanceof Branch) {return true}
                 }
             }
             test_row_length ++
@@ -122,7 +122,7 @@ class Level{
         this.squirrel.right_row = floor((this.squirrel.x + this.squirrel.width - this.x_offset)/this.grid_size)
     }
 
-    squirrel_on_branch(){
+    squirrel_on_branch(){ //depricated
         this.find_squirrel()
         if(this.squirrel.motion != "jump"){
             if(this.grid[this.squirrel.bottom_col][this.squirrel.left_row] instanceof Branch || this.grid[this.squirrel.bottom_col][this.squirrel.right_row] instanceof Branch){
@@ -162,6 +162,50 @@ class Level{
         this.lives -= 1
         this.squirrel.y = innerHeight/2
         this.squirrel.x = innerWidth/2
+    }
+
+    squirrel_fall(){
+        this.squirrel.y += this.squirrel.fall_speed_y
+        if(keyIsDown(LEFT_ARROW)){
+            this.squirrel.x -= this.squirrel.fly_speed_x
+        }
+        if (keyIsDown(RIGHT_ARROW)){
+            this.squirrel.x += this.squirrel.fly_speed_x
+        }
+    }
+
+    squirrel_land(){
+
+    }
+
+    squirrel_jump(){
+        if(this.squirrel.rise_since_jump >= this.squirrel.max_jump_height) {this.squirrel.motion = "fall"}
+        
+        else{ 
+            if(keyIsDown(LEFT_ARROW)) {this.squirrel.x -= this.squirrel.fly_speed_x}
+            if(keyIsDown(RIGHT_ARROW)) {this.squirrel.x += this.squirrel.fly_speed_x}
+
+            if(this.squirrel.rise_since_jump < 90 * this.squirrel.max_jump_height/100){
+                this.squirrel.y -= this.squirrel.jump_speed_y
+                this.squirrel.rise_since_jump += this.squirrel.jump_speed_y
+            }
+            else if(this.squirrel.rise_since_jump < 95 * this.squirrel.max_jump_height/100){
+                this.squirrel.y -= 2 * this.squirrel.jump_speed_y/3
+                this.squirrel.rise_since_jump +=  2 * this.squirrel.jump_speed_y/3
+            }
+            else if(this.squirrel.rise_since_jump < 98 * this.squirrel.max_jump_height/100){
+                this.squirrel.y -= this.squirrel.jump_speed_y/3
+                this.squirrel.rise_since_jump += this.squirrel.jump_speed_y/3
+            }
+            else{
+                this.squirrel.y -= this.squirrel.jump_speed_y/10
+                this.squirrel.rise_since_jump += this.squirrel.jump_speed_y/10
+            }
+        }
+    }
+
+    squirrel_walk(){
+
     }
   
     run(){
