@@ -26,19 +26,13 @@ class Level{
         let row = floor(x_px/this.grid_size)
         let col = floor(y_px/this.grid_size)
         col += this.grid_view
-        
-        let coords = [col, row]
-        return coords
+        return [col, row]
     }
 
-    get_px_by_coords(x_px, y_px){ //pasted from get coord by px, not functional yet
-        x_px -= this.x_offset
-        let row = floor(x_px/this.grid_size)
-        let col = floor(y_px/this.grid_size)
-        col += this.grid_view
-        
-        let coords = [col, row]
-        return coords
+    get_px_by_coords(col, row){
+       y_px = (col - this.grid_view) * this.grid_size
+       x_px = (row * this.grid_size + this.x_offset)
+       return [x_px, y_px]
     }
 
     predict_land(){
@@ -46,15 +40,29 @@ class Level{
         let test_start_col = coords[0] + this.squirrel.height_in_cols - 1
         let test_start_row = coords[1]
         let test_row_length = this.squirrel.width_in_rows
-        for(let test_col = test_start_col;  test_col < test_start_col + 10; test_col ++){
-            for(let test_row = test_start_row; test_row < test_start_row + test_row_length; test_row ++){
-                //fill("pink")
-                //rect(test_row * this.grid_size + this.x_offset, (test_col - this.grid_view) * this.grid_size, this.grid_size, this.grid_size)
-                if(test_col < this.grid_view + this.visible_grid_height && test_row >= 0 && test_row < this.grid_width){
-                    if(this.grid[test_col][test_row] instanceof Branch) {return [test_col, test_row]}
+        if(this.squirrel.facing === "rightTHIS"){
+            for(let test_col = test_start_col;  test_col < test_start_col + 10; test_col ++){
+                for(let test_row = test_start_row; test_row < test_start_row + test_row_length; test_row ++){
+                    //fill("pink")
+                    //rect(test_row * this.grid_size + this.x_offset, (test_col - this.grid_view) * this.grid_size, this.grid_size, this.grid_size)
+                    if(test_col < this.grid_view + this.visible_grid_height && test_row >= 0 && test_row < this.grid_width){
+                        if(this.grid[test_col][test_row] instanceof Branch) {return [test_col, test_row]}
+                    }
                 }
+                test_row_length ++
             }
-            test_row_length ++
+        }
+        else{
+            for(let test_col = test_start_col;  test_col < test_start_col + 10; test_col ++){
+                for(let test_row = test_start_row; test_row > test_start_row - test_row_length; test_row -= 1){
+                    //fill("pink")
+                    //rect(test_row * this.grid_size + this.x_offset, (test_col - this.grid_view) * this.grid_size, this.grid_size, this.grid_size)
+                    if(test_col < this.grid_view + this.visible_grid_height && test_row >= 0 && test_row < this.grid_width){
+                        if(this.grid[test_col][test_row] instanceof Branch) {return [test_col, test_row]}
+                    }
+                }
+                test_row_length ++
+            }
         }
         return false
     }
@@ -188,6 +196,12 @@ class Level{
     }
 
     squirrel_land(){
+        let branch = this.predict_land()
+        let branch_col = branch[0]
+        let branch_row = branch[1]
+        
+
+
         this.squirrel.y += this.squirrel.fall_speed_y
         if(keyIsDown(LEFT_ARROW)){
             this.squirrel.x -= this.squirrel.fly_speed_x
@@ -244,5 +258,6 @@ class Level{
         }
 
         this.display_all()
+        this.predict_land()
     }
 }
