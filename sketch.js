@@ -21,7 +21,11 @@ function draw() {
 }
 
 function keyPressed(){
-  if(key === " "  && game.current_level.squirrel.jumps_since_land < game.current_level.squirrel.max_jumps_since_land){
+  if(key === " "){
+    console.log(game.current_level.squirrel.motion)
+  }
+  if(key === " "  && (game.current_level.squirrel.motion === "walk" || game.current_level.squirrel.motion === null)){
+    console.log("setting motion to jump in keyPressed")
     game.current_level.squirrel.jumps_since_land += 1
     game.current_level.squirrel.motion = "jump"
     game.current_level.squirrel.rise_since_jump = 0

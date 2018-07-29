@@ -30,8 +30,8 @@ class Level{
     }
 
     get_px_by_coords(col, row){
-       y_px = (col - this.grid_view) * this.grid_size
-       x_px = (row * this.grid_size + this.x_offset)
+       let y_px = (col - this.grid_view) * this.grid_size
+       let x_px = (row * this.grid_size + this.x_offset)
        return [x_px, y_px]
     }
 
@@ -40,7 +40,7 @@ class Level{
         let test_start_col = coords[0] + this.squirrel.height_in_cols - 1
         let test_start_row = coords[1]
         let test_row_length = this.squirrel.width_in_rows
-        if(this.squirrel.facing === "rightTHIS"){
+        if(this.squirrel.facing === "right"){
             for(let test_col = test_start_col;  test_col < test_start_col + 10; test_col ++){
                 for(let test_row = test_start_row; test_row < test_start_row + test_row_length; test_row ++){
                     //fill("pink")
@@ -184,7 +184,6 @@ class Level{
 
     squirrel_fall(){
         let branch_coords = this.predict_land()
-        //if
         //add counter for distance fallen and adjust speed accordingly
         this.squirrel.y += this.squirrel.fall_speed_y
         if(keyIsDown(LEFT_ARROW)){
@@ -197,17 +196,66 @@ class Level{
 
     squirrel_land(){
         let branch = this.predict_land()
-        let branch_col = branch[0]
-        let branch_row = branch[1]
-        
-
-
-        this.squirrel.y += this.squirrel.fall_speed_y
-        if(keyIsDown(LEFT_ARROW)){
-            this.squirrel.x -= this.squirrel.fly_speed_x
+        let branch_px = this.get_px_by_coords(branch[0], branch[1])
+        let branch_x = branch_px[0]
+        let branch_y = branch_px[1]
+        this.squirrel.find_hit_boxes()
+        let back_feet = false
+        let front_feet = false
+        if(this.squirrel.in_hit_box(branch_x, branch_y, this.squirrel.back_feet_start_x, this.squirrel.back_feet_start_y, this.squirrel.back_feet_end_x, this.squirrel.back_feet_end_y) === true){
+            back_feet = true
         }
-        if (keyIsDown(RIGHT_ARROW)){
-            this.squirrel.x += this.squirrel.fly_speed_x
+        if(this.squirrel.in_hit_box(branch_x, branch_y, this.squirrel.front_feet_start_x, this.squirrel.front_feet_start_y, this.squirrel.front_feet_end_x, this.squirrel.front_feet_end_y) === true){
+            front_feet = true
+        }
+        if(back_feet === false && front_feet === false){
+            let distance = branch_y - (this.squirrel.y + this.squirrel.height/2)
+            if(distance > 8 * innerHeight/100){
+                //set animation sequence
+                this.squirrel_fall()
+            }
+            else if(distance > 5 * innerHeight/100){
+                //set animation sequence
+                this.squirrel_fall()
+            }
+            else if(distance > 1 * innerHeight/100){
+                //set animation sequence
+                this.squirrel_fall()
+            }
+            else{
+                //set animation sequence
+                this.squirrel_fall()
+            }
+        }
+        else if(back_feet === true && front_feet === false){
+            //get branch direction and adjust squirrel postion and squirrel.facing so that both feet are on branch
+            this.squirrel.motion = null
+            if(this.grid[branch[0]][branch[1]].direction === "right"){
+                
+            }
+        }
+        else if(back_feet === false && front_feet === true){
+            //get branch direction and adjust squirrel postion and squirrel.facing so that both feet are on branch
+            this.squirrel.motion = null
+        }
+        else{
+            this.squirrel.motion = null
+        }
+    }
+
+    squirrel_land2(){
+        if(this.predict_land() != false){
+            let branch_coords = this.predict_land()
+            ///let branch_pointer = this.grid[branch_coords[0]][branch_coords[1]]
+            let branch_pixles = this.get_px_by_coords(branch_coords[0], branch[1])
+            let branch_x = branch_pixles[0]
+            let branch_y = branch_pixles[1]
+            this.squirrel.find_hit_boxes()
+            let squirrel_x = this.squirrel.front_feet_end_x
+            let squirrel_y = this.squirrel.front_feet_end_y
+            let x_dist = abs(branch_x - squirrel_x)
+            let y_dist = branch_y - squirrel_y
+            
         }
     }
 
@@ -258,6 +306,5 @@ class Level{
         }
 
         this.display_all()
-        this.predict_land()
     }
 }

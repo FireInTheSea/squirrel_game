@@ -35,8 +35,8 @@ class Squirrel {
 
         this.fly_speed_x = 2 * innerHeight/100
 
-        this.max_jumps_since_land = 1
-        this.jumps_since_land = 0
+        this.max_jumps_since_land = 1 //depricated
+        this.jumps_since_land = 0 // depricated
         this.max_jump_height = 200
         this.jump_speed_y = 2 * innerHeight/100
         this.rise_since_jump = 0
@@ -115,6 +115,7 @@ class Squirrel {
     }
 
     move(){ //in process of being replaced
+        console.log("called depricated method Squirrel.move()")
         if(this.motion === "jump"){
             this.jump()
         }
