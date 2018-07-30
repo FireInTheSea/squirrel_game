@@ -4,7 +4,7 @@ class Branch{
         this.grid_size = grid_size
         this.col = base_col
         this.row = base_row
-        this.size = height_in_cols
+        this.size = height_in_cols //minimum 2 
         this.direction = direction
         this.angle = 5 // horizontal : vertical
         this.img = image
