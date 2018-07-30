@@ -130,7 +130,7 @@ class Level{
     display_all(){
         this.display_grid()
         this.display_objects()
-        this.display_squirrel()
+        //this.display_squirrel()
     }
 
     find_squirrel(){ // depricated
@@ -192,9 +192,11 @@ class Level{
         if (keyIsDown(RIGHT_ARROW)){
             this.squirrel.x += this.squirrel.fly_speed_x
         }
+        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
+
     }
 
-    squirrel_land(){
+    squirrel_land1(){
         let branch = this.predict_land()
         let branch_px = this.get_px_by_coords(branch[0], branch[1])
         let branch_x = branch_px[0]
@@ -241,21 +243,46 @@ class Level{
         else{
             this.squirrel.motion = null
         }
+        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
     }
 
-    squirrel_land2(){
+    squirrel_land(){
+        console.log("called Level.squirrel_land")
+        let displayed_land = false
         if(this.predict_land() != false){
+            console.log("reached point 1")
             let branch_coords = this.predict_land()
-            ///let branch_pointer = this.grid[branch_coords[0]][branch_coords[1]]
-            let branch_pixles = this.get_px_by_coords(branch_coords[0], branch[1])
-            let branch_x = branch_pixles[0]
-            let branch_y = branch_pixles[1]
-            this.squirrel.find_hit_boxes()
-            let squirrel_x = this.squirrel.front_feet_end_x
-            let squirrel_y = this.squirrel.front_feet_end_y
-            let x_dist = abs(branch_x - squirrel_x)
-            let y_dist = branch_y - squirrel_y
+            let branch_pointer = this.grid[branch_coords[0]][branch_coords[1]]
+            let branch_pixles = this.get_px_by_coords(branch_coords[0], branch_coords[1])
+            let branch_y_plot = this.get_y_plot(branch_pixles[0], branch_pointer)
             
+            this.squirrel.find_hit_boxes()
+            let y_dist = floor(branch_y_plot - this.squirrel.front_feet_end_y)
+            console.log("y_dist ===", y_dist)
+            if(y_dist <= 20){
+                for(let i = 20; i >= 0; i -= 1){
+                    if(i === y_dist){
+                        //image(this.land_sequence[i], this.squirrel.x, this.squirrel.y)
+                        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
+                        console.log("diplsayed squirrel in Level.squirrel_land")
+                        displayed_land = true
+                    }
+                }
+            }
+            if(this.squirrel.y + this.squirrel.fall_speed_y <= branch_y_plot){
+                this.squirrel.y += this.squirrel.fall_speed_y
+            }
+            else if(this.squirrel.y + this.squirrel.fall_speed_y/2 <= branch_y_plot){
+                this.squirrel.y += this.squirrel.fall_speed_y/2
+            }
+            else{
+                this.squirrel.y = branch_y_plot
+            }
+        }
+
+        if(displayed_land === false){
+            this.squirrel.motion = "fall"
+            this.squirrel_fall
         }
     }
 
@@ -283,13 +310,19 @@ class Level{
                 this.squirrel.rise_since_jump += this.squirrel.jump_speed_y/10
             }
         }
+        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
     }
 
     squirrel_walk(){
+        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
+    }
 
+    squirrel_null(){
+        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
     }
   
     run(){
+        this.display_all()
         if(this.lethal_fall === true) {this.kill()}
 
         else if(this.hit_enemy() === true) {this.kill()}
@@ -302,9 +335,8 @@ class Level{
             if(this.squirrel.motion === "jump") {this.squirrel_jump()}
             if(this.squirrel.motion === "land") {this.squirrel_land()}
             if(this.squirrel.motion === "walk"){this.squirrel_walk()}
-            if(this.squirrel.motion === null){/*break branch*/}
+            if(this.squirrel.motion === null){this.squirrel_null()}
         }
 
-        this.display_all()
     }
 }
