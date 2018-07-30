@@ -30,7 +30,7 @@ class Squirrel {
        this.hit_box_right = loadImage("/images/hit_box_right.png", img => {img.resize(this.width, this.height)})
     }
 
-    set_moition_rules(){
+    set_moition_rules(){//change hard coded numbers to floored percentages of innerHeight
         this.motion = null
 
         this.fly_speed_x = 2 * innerHeight/100
@@ -44,6 +44,8 @@ class Squirrel {
         this.fall_speed_y = 3 * innerHeight/100
 
         this.walk_speed_x = 4
+
+        this.start_land_dist = 70 
     }
 
     find_hit_boxes(){

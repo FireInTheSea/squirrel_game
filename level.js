@@ -183,74 +183,46 @@ class Level{
     }
 
     squirrel_fall(){
+        console.log("called Level.squirrel_fall")
         let branch_coords = this.predict_land()
+        if(branch_coords != false){
+            console.log("predict land found branch in squirrel_fall(), checking distance to branch")
+            let branch_pointer = this.grid[branch_coords[0]][branch_coords[1]]
+            let branch_pixles = this.get_px_by_coords(branch_coords[0], branch_coords[1])
+            let branch_y_plot = this.get_y_plot(branch_pixles[0], branch_pointer)
+            this.squirrel.find_hit_boxes()
+            let y_dist = floor(branch_y_plot - this.squirrel.front_feet_end_y)    
+            console.log("distance is", y_dist)  
+            if(y_dist - this.squirrel.fall_speed_y < this.squirrel.start_land_dist) {
+                this.squirrel.y = floor(branch_y_plot - this.squirrel.start_land_dist - this.squirrel.height/8 - this.squirrel.height/3)
+                this.squirrel.motion = 'land'
+                console.log("would pass start_land_dist if fall continues, changing motion to land")
+                console.log("set Squirrel.y to", this.squirrel.y)
+
+                this.squirrel.find_hit_boxes()
+                let y_dist = floor(branch_y_plot - this.squirrel.front_feet_end_y)
+                console.log("y_dist is", y_dist)
+
+                this.squirrel_land()}
+        }
         //add counter for distance fallen and adjust speed accordingly
-        this.squirrel.y += this.squirrel.fall_speed_y
-        if(keyIsDown(LEFT_ARROW)){
-            this.squirrel.x -= this.squirrel.fly_speed_x
-        }
-        if (keyIsDown(RIGHT_ARROW)){
-            this.squirrel.x += this.squirrel.fly_speed_x
-        }
-        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
-
-    }
-
-    squirrel_land1(){
-        let branch = this.predict_land()
-        let branch_px = this.get_px_by_coords(branch[0], branch[1])
-        let branch_x = branch_px[0]
-        let branch_y = branch_px[1]
-        this.squirrel.find_hit_boxes()
-        let back_feet = false
-        let front_feet = false
-        if(this.squirrel.in_hit_box(branch_x, branch_y, this.squirrel.back_feet_start_x, this.squirrel.back_feet_start_y, this.squirrel.back_feet_end_x, this.squirrel.back_feet_end_y) === true){
-            back_feet = true
-        }
-        if(this.squirrel.in_hit_box(branch_x, branch_y, this.squirrel.front_feet_start_x, this.squirrel.front_feet_start_y, this.squirrel.front_feet_end_x, this.squirrel.front_feet_end_y) === true){
-            front_feet = true
-        }
-        if(back_feet === false && front_feet === false){
-            let distance = branch_y - (this.squirrel.y + this.squirrel.height/2)
-            if(distance > 8 * innerHeight/100){
-                //set animation sequence
-                this.squirrel_fall()
+        if(this.squirrel.motion === "fall"){
+            console.log("predict land test did not change motion, running squirrel fall")
+            this.squirrel.y += this.squirrel.fall_speed_y
+            if(keyIsDown(LEFT_ARROW)){
+                this.squirrel.x -= this.squirrel.fly_speed_x
             }
-            else if(distance > 5 * innerHeight/100){
-                //set animation sequence
-                this.squirrel_fall()
+            if (keyIsDown(RIGHT_ARROW)){
+                this.squirrel.x += this.squirrel.fly_speed_x
             }
-            else if(distance > 1 * innerHeight/100){
-                //set animation sequence
-                this.squirrel_fall()
-            }
-            else{
-                //set animation sequence
-                this.squirrel_fall()
-            }
+            image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
         }
-        else if(back_feet === true && front_feet === false){
-            //get branch direction and adjust squirrel postion and squirrel.facing so that both feet are on branch
-            this.squirrel.motion = null
-            if(this.grid[branch[0]][branch[1]].direction === "right"){
-                
-            }
-        }
-        else if(back_feet === false && front_feet === true){
-            //get branch direction and adjust squirrel postion and squirrel.facing so that both feet are on branch
-            this.squirrel.motion = null
-        }
-        else{
-            this.squirrel.motion = null
-        }
-        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
     }
 
     squirrel_land(){
         console.log("called Level.squirrel_land")
         let displayed_land = false
         if(this.predict_land() != false){
-            console.log("reached point 1")
             let branch_coords = this.predict_land()
             let branch_pointer = this.grid[branch_coords[0]][branch_coords[1]]
             let branch_pixles = this.get_px_by_coords(branch_coords[0], branch_coords[1])
@@ -259,35 +231,35 @@ class Level{
             this.squirrel.find_hit_boxes()
             let y_dist = floor(branch_y_plot - this.squirrel.front_feet_end_y)
             console.log("y_dist ===", y_dist)
-            if(y_dist <= 20){
-                for(let i = 20; i >= 0; i -= 1){
-                    if(i === y_dist){
-                        //image(this.land_sequence[i], this.squirrel.x, this.squirrel.y)
-                        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
-                        console.log("diplsayed squirrel in Level.squirrel_land")
-                        displayed_land = true
+            for(let i = this.squirrel.start_land_dist; i >= 0; i -= 1){
+                if(i === y_dist){
+                    if(this.squirrel.y + this.squirrel.fall_speed_y <= branch_y_plot){
+                        this.squirrel.y += this.squirrel.fall_speed_y
                     }
+                    else if(this.squirrel.y + this.squirrel.fall_speed_y/2 <= branch_y_plot){
+                        this.squirrel.y += this.squirrel.fall_speed_y/2
+                    }
+                    else{
+                        this.squirrel.y = branch_y_plot
+                    }
+                    //image(this.land_sequence[i], this.squirrel.x, this.squirrel.y)
+                    image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
+                    console.log("diplsayed squirrel in Level.squirrel_land")
+                    displayed_land = true
                 }
-            }
-            if(this.squirrel.y + this.squirrel.fall_speed_y <= branch_y_plot){
-                this.squirrel.y += this.squirrel.fall_speed_y
-            }
-            else if(this.squirrel.y + this.squirrel.fall_speed_y/2 <= branch_y_plot){
-                this.squirrel.y += this.squirrel.fall_speed_y/2
-            }
-            else{
-                this.squirrel.y = branch_y_plot
-            }
+            }            
         }
 
         if(displayed_land === false){
+            console.log("squirrel_land() did not display, changing motion to fall")
             this.squirrel.motion = "fall"
-            this.squirrel_fall
+            this.squirrel_fall()
         }
     }
 
     squirrel_jump(){
-        if(this.squirrel.rise_since_jump >= this.squirrel.max_jump_height) {this.squirrel.motion = "fall"}
+        console.log("called Level.squirrel_jump")
+        if(this.squirrel.rise_since_jump >= this.squirrel.max_jump_height) {this.squirrel.motion = "fall"; console.log("jump() changed motion to fall"); this.squirrel_fall()}
         
         else{ 
             if(keyIsDown(LEFT_ARROW)) {this.squirrel.x -= this.squirrel.fly_speed_x}
@@ -314,28 +286,30 @@ class Level{
     }
 
     squirrel_walk(){
+        console.log("called Level.squirrel_walk")
         image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
     }
 
     squirrel_null(){
+        console.log("called Level.squirrel_null()")
         image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
     }
   
     run(){
+        console.log("called Level.run")
+        console.log("motion is", this.squirrel.motion)
+
         this.display_all()
         if(this.lethal_fall === true) {this.kill()}
 
         else if(this.hit_enemy() === true) {this.kill()}
 
         else{
-            if(this.squirrel.motion === "fall"){
-                if(this.predict_land() != false) {this.squirrel.motion = "land"}
-                else {this.squirrel_fall()}
-            }
-            if(this.squirrel.motion === "jump") {this.squirrel_jump()}
             if(this.squirrel.motion === "land") {this.squirrel_land()}
-            if(this.squirrel.motion === "walk"){this.squirrel_walk()}
-            if(this.squirrel.motion === null){this.squirrel_null()}
+            else if(this.squirrel.motion === "fall") {this.squirrel_fall()}
+            else if(this.squirrel.motion === "jump") {this.squirrel_jump()}
+            else if(this.squirrel.motion === "walk"){this.squirrel_walk()}
+            else if(this.squirrel.motion === null){this.squirrel_null()}
         }
 
     }

@@ -9,7 +9,7 @@ function preload(){
 function setup() {
   createCanvas(innerWidth, innerHeight - 4)
   imageMode(CENTER) 
-  //frameRate(10)
+  frameRate(1)
   game = new Game()
   branch1.resize(50, 50)
   
