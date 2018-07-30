@@ -233,24 +233,32 @@ class Level{
             console.log("y_dist ===", y_dist)
             for(let i = this.squirrel.start_land_dist; i >= 0; i -= 1){
                 if(i === y_dist){
-                    if(this.squirrel.y + this.squirrel.fall_speed_y <= branch_y_plot){
+                    if(this.squirrel.front_feet_end_y + this.squirrel.fall_speed_y <= branch_y_plot){
                         this.squirrel.y += this.squirrel.fall_speed_y
+                        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
+                        displayed_land = true
                     }
-                    else if(this.squirrel.y + this.squirrel.fall_speed_y/2 <= branch_y_plot){
+                    else if(this.squirrel.front_feet_end_y + this.squirrel.fall_speed_y/2 <= branch_y_plot){
                         this.squirrel.y += this.squirrel.fall_speed_y/2
+                        image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
+                        displayed_land = true
                     }
                     else{
-                        this.squirrel.y = branch_y_plot
+                        this.squirrel.y = branch_y_plot - this.squirrel.height/8 - this.squirrel.height/3
+                        this.squirrel.motion = null
+                        this.squirrel_null()
                     }
+
+                    this.squirrel.find_hit_boxes()
+                    let y_dist = floor(branch_y_plot - this.squirrel.front_feet_end_y)
+                    console.log("squirrel land set y_dist to", y_dist)
                     //image(this.land_sequence[i], this.squirrel.x, this.squirrel.y)
-                    image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
                     console.log("diplsayed squirrel in Level.squirrel_land")
-                    displayed_land = true
                 }
             }            
         }
 
-        if(displayed_land === false){
+        if(displayed_land === false && this.squirrel.motion === "land"){
             console.log("squirrel_land() did not display, changing motion to fall")
             this.squirrel.motion = "fall"
             this.squirrel_fall()
