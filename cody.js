@@ -46,7 +46,7 @@ class Squirrel {
         this.start_land_dist = 70 
     }
 
-    find_hit_boxes(){
+    find_hit_boxes1(){
         let back_feet_width = this.width/5
         let back_feet_height = 30 * this.height/100
         this.back_feet_start_x = this.x - back_feet_width/2
@@ -88,30 +88,39 @@ class Squirrel {
         }
     }
 
+    find_hit_boxes(){
+        let main_box_width = 45 * this.width/100
+        let main_box_height = this.height/3
+        this.main_box_start_y = this.y + this.height/20
+        this.main_box_end_y = this.main_box_start_y + main_box_height
+
+        let feet_box_width = 45 * this.width/100
+        let feet_box_height = this.height/3
+        this.feet_box_end_y = this.y + this.height/2
+        this.feet_box_start_y = this.feet_box_end_y - feet_box_height
+
+        if(this.facing === "right"){
+            this.main_box_start_x = this.x - this.width/20
+            this.main_box_end_x = this.main_box_start_x + main_box_width
+            
+            this.feet_box_start_x = this.x - this.width/20
+            this.feet_box_end_x = this.feet_box_start_x + feet_box_width
+        }
+
+        else if(this.facing === "left"){
+            this.main_box_end_x = this.x + this.width/20
+            this.main_box_start_x = this.main_box_end_x - main_box_width
+
+            this.feet_box_end_x = this.width + this.width/20
+            this.feet_box_start_x = this.feet_box_end_x - feet_box_width
+        }
+    }
+
     in_hit_box(x, y, box_start_x, box_start_y, box_end_x, box_end_y){
         if(x > box_start_x && x < box_end_x && y > box_start_y && y < box_end_y){
             return true
         }
         return false
-    }
-
-
-
-    display(){
-        //fill(0, 255, 255)
-        //rect(this.x, this.y -  this.height, this.width, this.height)
-        this.find_hit_boxes()
-        fill("gray")
-        if(this.in_hit_box(mouseX, mouseY, this.back_feet_start_x, this.back_feet_start_y, this.back_feet_end_x, this.back_feet_end_y) === true){
-            rect(this.back_feet_start_x, this.back_feet_start_y, this.back_feet_end_x - this.back_feet_start_x, this.back_feet_end_y - this.back_feet_start_y)
-        }
-        if(this.in_hit_box(mouseX, mouseY, this.front_feet_start_x, this.front_feet_start_y, this.front_feet_end_x, this.front_feet_end_y) === true){
-            rect(this.front_feet_start_x, this.front_feet_start_y, this.front_feet_end_x - this.front_feet_start_x, this.front_feet_end_y - this.front_feet_start_y)
-        }
-        if(this.in_hit_box(mouseX, mouseY, this.main_box_start_x, this.main_box_start_y, this.main_box_end_x, this.main_box_end_y) === true){
-            rect(this.main_box_start_x, this.main_box_start_y, this.main_box_end_x - this.main_box_start_x, this.main_box_end_y - this.main_box_start_y)
-        }
-        image(this.hit_box_right, this.x, this.y)
     }
 
     move(){ //in process of being replaced
