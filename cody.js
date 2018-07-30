@@ -29,6 +29,7 @@ class Squirrel {
         this.die_cycle = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]*/
        //this.hit_box_left = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
        this.hit_box_right = loadImage("/images/hit_box_right.png", img => {img.resize(this.width, this.height)})
+       this.hit_box_left = loadImage("/images/hit_box_left.png", img => {img.resize(this.width, this.height)})
     }
 
     set_moition_rules(){//change hard coded numbers to floored percentages of innerHeight
