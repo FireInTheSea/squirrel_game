@@ -22,10 +22,10 @@ function draw() {
 }
 
 function keyPressed(){
-  if(key === " "  && (game.current_level.squirrel.motion === "walk" || game.current_level.squirrel.motion === null)){
-    game.current_level.squirrel.jumps_since_land += 1
+  if(key === " "  && (game.current_level.squirrel.motion === "walk" || game.current_level.squirrel.motion === null || game.current_level.squirrel.motion === "climb")){
     game.current_level.squirrel.motion = "jump"
     game.current_level.squirrel.rise_since_jump = 0
+    game.current_level.squirrel.current_branch = null
   }
 
 }

@@ -161,14 +161,16 @@ class Level{
         let branch_coords = this.predict_land()
         if(branch_coords != false){
             let branch_pointer = this.grid[branch_coords[0]][branch_coords[1]]
-            let branch_pixles = this.get_px_by_coords(branch_coords[0], branch_coords[1])
-            let branch_y_plot = this.get_y_plot(branch_pixles[0], branch_pointer)
+            //let branch_pixles = this.get_px_by_coords(branch_coords[0], branch_coords[1])
+            //let branch_y_plot = this.get_y_plot(branch_pixles[0], branch_pointer)
+            let branch_y_plot = this.get_y_plot(this.squirrel.x, branch_pointer)
             this.squirrel.find_hit_boxes()
             let y_dist = floor(branch_y_plot - this.squirrel.feet_box_end_y)    
             if(y_dist - this.squirrel.fall_speed_y < this.squirrel.start_land_dist) {
                 this.squirrel.y = floor(branch_y_plot - this.squirrel.start_land_dist - this.squirrel.height/2)
                 this.squirrel.motion = 'land'
-                this.squirrel_land()}
+                this.squirrel_land()
+            }
         }
         //add counter for distance fallen and adjust speed accordingly
         if(this.squirrel.motion === "fall"){
@@ -188,8 +190,9 @@ class Level{
         if(this.predict_land() != false){
             let branch_coords = this.predict_land()
             let branch_pointer = this.grid[branch_coords[0]][branch_coords[1]]
-            let branch_pixles = this.get_px_by_coords(branch_coords[0], branch_coords[1])
-            let branch_y_plot = this.get_y_plot(branch_pixles[0], branch_pointer)
+            //let branch_pixles = this.get_px_by_coords(branch_coords[0], branch_coords[1])
+            //let branch_y_plot = this.get_y_plot(branch_pixles[0], branch_pointer)
+            let branch_y_plot = this.get_y_plot(this.squirrel.x, branch_pointer)
             
             this.squirrel.find_hit_boxes()
             let y_dist = floor(branch_y_plot - this.squirrel.feet_box_end_y)
@@ -209,8 +212,10 @@ class Level{
                     }
                     else{
                         this.squirrel.y = branch_y_plot - this.squirrel.height/2
-                        this.squirrel.motion = null
-                        this.squirrel_null()
+                        this.squirrel.current_branch = branch_pointer
+                        this.squirrel.direction = branch_pointer.direction
+                        this.squirrel.motion = "climb"
+                        this.squirrel_climb()
                     }
 
 
@@ -251,7 +256,52 @@ class Level{
         image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
     }
 
+    squirrel_climb(){ //adjusts position after landing so that both feet are on branch
+        let b = this.squirrel.current_branch
+
+        let base = this.get_px_by_coords(b.col, b.row)
+        let base_x = base[0]
+
+        let end_col = b.col - b.size
+        let end_row = (b.direction === 'right') ? b.row + b.size * b.angle : b.row - b.size * b.angle
+        let end = this.get_px_by_coords(end_col, end_row)
+        let end_x = end[0]
+
+        if(b.size > 1){
+            let distance_off
+
+            if(b.direction === "right"){
+                if(base_x - 1 < this.squirrel.x - this.squirrel.width/8 && end_x + 1 > this.squirrel.x + 0.4 * this.squirrel.width){ 
+                    this.squirrel.motion = null
+                    this.squirrel_null()
+                }
+                else if(base_x > this.squirrel.x - this.squirrel.width/8){
+                    distance_off = base_x - (this.squirrel.x - this.squirrel.width/8)
+                    this.squirrel.x += ceil(distance_off/8)
+                    this.squirrel.y = this.get_y_plot(this.squirrel.x, this.squirrel.current_branch) - this.squirrel.height/2
+                    image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
+                }
+                else{
+                    distance_off = (this.squirrel.x + 0.4 * this.squirrel.width) - end_x
+                    this.squirrel.x -= ceil(distance_off/8)
+                    this.squirrel.y = this.get_y_plot(this.squirrel.x, this.squirrel.current_branch) - this.squirrel.height/2
+                    image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
+                }
+            }
+
+            else{
+                if(end_x - 1 < this.squirrel.x - 0.4 * this.squirrel.width && base_x + 1 > this.squirrel.x + this.squirrel.width/8){
+                    this.squirrel.motion = null
+                    this.squirrel_null()
+                }
+            }
+        }
+        // if branch size === 1, center squirrel on branch
+
+    }
+
     squirrel_walk(){
+        //if walk off branch change this.squirrel.current branch to null
         image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)
     }
 
@@ -277,6 +327,7 @@ class Level{
 
         else{
             if(this.squirrel.motion === "land") {this.squirrel_land()}
+            else if(this.squirrel.motion === "climb") {this.squirrel_climb()}
             else if(this.squirrel.motion === "fall") {this.squirrel_fall()}
             else if(this.squirrel.motion === "jump") {this.squirrel_jump()}
             else if(this.squirrel.motion === "walk"){this.squirrel_walk()}

@@ -9,6 +9,7 @@ class Squirrel {
 
         this.facing = "right"
         this.state = "standing"
+        this.current_branch = null
         
         this.loadImages()
         this.set_moition_rules()
