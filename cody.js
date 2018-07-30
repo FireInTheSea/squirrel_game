@@ -35,8 +35,6 @@ class Squirrel {
 
         this.fly_speed_x = 2 * innerHeight/100
 
-        this.max_jumps_since_land = 1 //depricated
-        this.jumps_since_land = 0 // depricated
         this.max_jump_height = 200
         this.jump_speed_y = 2 * innerHeight/100
         this.rise_since_jump = 0

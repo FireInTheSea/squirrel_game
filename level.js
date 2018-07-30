@@ -130,27 +130,6 @@ class Level{
     display_all(){
         this.display_grid()
         this.display_objects()
-        //this.display_squirrel()
-    }
-
-    find_squirrel(){ // depricated
-        this.squirrel.bottom_col = floor(this.squirrel.y/this.grid_size + this.grid_view)
-        this.squirrel.top_col = floor((this.squirrel.y - this.squirrel.height)/this.grid_size + this.grid_view)
-        this.squirrel.left_row = floor((this.squirrel.x - this.x_offset)/this.grid_size)
-        this.squirrel.right_row = floor((this.squirrel.x + this.squirrel.width - this.x_offset)/this.grid_size)
-    }
-
-    squirrel_on_branch(){ //depricated
-        this.find_squirrel()
-        if(this.squirrel.motion != "jump"){
-            if(this.grid[this.squirrel.bottom_col][this.squirrel.left_row] instanceof Branch || this.grid[this.squirrel.bottom_col][this.squirrel.right_row] instanceof Branch){
-                this.squirrel.jumps_since_land = 0
-                this.squirrel.is_on_branch = true
-            }
-            else{
-                this.squirrel.is_on_branch = false
-            }
-        }
     }
 
     hit_enemy(){
