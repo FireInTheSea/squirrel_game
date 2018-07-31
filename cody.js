@@ -32,28 +32,26 @@ class Squirrel {
        this.hit_box_left = loadImage("/images/hit_box_left.png", img => {img.resize(this.width, this.height)})
     }
 
-    set_moition_rules(grid_size){//change hard coded numbers to percentages of innerHeight 
+    set_moition_rules(grid_size){
         this.motion = null
-        this.jump_type = null //pixles or cols, depending on squirrel.y at jump start
+        this.jump_type = null
 
         this.max_x_speed= 0.02 * innerHeight
         this.min_x_speed = -1 * this.max_x_speed
-        this.x_acceleration_per_frame = 0.003 * innerHeight
+        this.x_acceleration_per_frame = 0.001 * innerHeight
         this.x_speed = 0
 
-        this.max_y_speed_cols = 0.5
-        this.min_y_speed_cols = -2
-        this.max_jump_height_cols = 8
+        this.min_y_speed_cols = -1
+        this.max_y_speed_cols = 2
+        this.max_jump_height_cols = 80
         this.y_speed_cols = 0
-        this.cols_jumped = 0
 
         this.y_accelartion_jump = 0.9 //multiplied by y speed every frame
 
-        this.max_y_speed_px = this.max_y_speed_cols * grid_size
         this.min_y_speed_px = this.min_y_speed_cols * grid_size
+        this.max_y_speed_px = this.max_y_speed_cols * grid_size
         this.max_jump_height_px = this.max_jump_height_cols * grid_size
         this.y_speed_px = 0
-        this.px_jumped = 0
     }
 
     find_hit_boxes(){

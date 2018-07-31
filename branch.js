@@ -40,6 +40,6 @@ class Branch{
             //image(this.img, this.img_row * grid_size + x_offset, (this.img_col - grid_view) * grid_size)
         } 
         fill(200, 200, 50)
-        rect(row * this.grid_size + x_offset, (col - grid_view) * this.grid_size, this.grid_size, this.grid_size)
+        rect(row * this.grid_size + x_offset, (col - floor(grid_view)) * this.grid_size, this.grid_size, this.grid_size)
     }
 }
