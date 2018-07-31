@@ -241,8 +241,10 @@ class Level{
             console.log("pixels jumped is", this.squirrel.px_jumped)
             console.log("max jump height is", this.squirrel.max_jump_height_px)
             if(this.squirrel.px_jumped + this.squirrel.y_speed_px <= this.squirrel.max_jump_height_px){
+                console.log("y pos at", this.squirrel.y)
                 console.log("changing y pos")
                 this.squirrel.y += this.squirrel.y_speed_px
+                console.log("y pos at", this.squirrel.y)
                 this.squirrel.px_jumped += this.squirrel.y_speed_px
             }
             else{
