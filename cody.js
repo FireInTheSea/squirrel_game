@@ -35,9 +35,9 @@ class Squirrel {
     set_moition_rules(grid_size){
         this.motion = null
 
-        this.max_x_speed= 0.02 * innerHeight
+        this.max_x_speed= 0.01 * innerHeight
         this.min_x_speed = -1 * this.max_x_speed
-        this.x_acceleration_per_frame = 0.001 * innerHeight
+        this.x_acceleration_per_frame = 0.005 * innerHeight
         this.x_speed = 0
        
         this.min_y_speed = -0.03 * innerHeight
@@ -59,16 +59,16 @@ class Squirrel {
             this.main_start_x = this.x - this.width/20
             this.main_end_x = this.main_start_x + main_width
             
-            this.back_foot_x = this.x - this.width/20
-            this.front_foot_x = this.x + 0.45 * this.width
+            this.back_foot_x = this.x
+            this.front_foot_x = this.x + 0.3 * this.width
         }
 
         else if(this.facing === "left"){
             this.main_end_x = this.x + this.width/20
             this.main_start_x = this.main_end_x - main_width
 
-            this.back_foot_x = this.x + this.width/20
-            this.front_foot_x = this.x - 0.45 * this.width
+            this.back_foot_x = this.x
+            this.front_foot_x = this.x - 0.3 * this.width
         }
     }
 
