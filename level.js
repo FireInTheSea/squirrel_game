@@ -18,9 +18,9 @@ class Level{
     }
 
     load_level1(){
-        this.grid[953][10] = new Branch(this.grid, this.grid_size, 953, 10, 2, 'left', branch1)
-        this.grid[960][25] = new Branch(this.grid, this.grid_size, 960, 25, 2, 'left', branch1)
-        this.grid[975][40] = new Branch(this.grid, this.grid_size, 975, 40, 3, 'right', branch1)
+        this.grid[953][10] = new Branch(this.grid, this.grid_size, 953, 10, 3, 'left', branch1)
+        this.grid[970][25] = new Branch(this.grid, this.grid_size, 970, 25, 2, 'left', branch1)
+        this.grid[980][40] = new Branch(this.grid, this.grid_size, 980, 40, 3, 'right', branch1)
         this.grid[985][30] = new Branch(this.grid, this.grid_size, 985, 30, 2, 'left', branch1)
 
     }
@@ -97,7 +97,7 @@ class Level{
     }
 
     display_all(){
-        this.display_grid()
+        //this.display_grid()
         this.display_objects()
     }
 
@@ -196,16 +196,14 @@ class Level{
 
 
     squirrel_jump(){
-        if(keyIsDown(LEFT_ARROW)) {
-            if(this.squirrel.x_speed - this.squirrel.x_acceleration_per_frame > this.squirrel.min_x_speed){this.squirrel.x_speed -= this.squirrel.x_acceleration_per_frame}}
-        if(keyIsDown(RIGHT_ARROW)) {
-            if(this.squirrel.x_speed + this.squirrel.x_acceleration_per_frame < this.squirrel.max_x_speed){this.squirrel.x_speed += this.squirrel.x_acceleration_per_frame}} 
+        this.squirrel.x_speed = (keyIsDown(LEFT_ARROW)) ? this.squirrel.min_x_speed : 0
+        this.squirrel.x_speed = (keyIsDown(RIGHT_ARROW)) ? this.squirrel.max_x_speed : this.squirrel.x_speed
         if(this.squirrel.x + this.squirrel.x_speed > this.x_offset && this.squirrel.x + this.squirrel.x_speed < this.grid_width * this.grid_size + this.x_offset){
             this.squirrel.x += this.squirrel.x_speed
         }
-        this.squirrel.facing = (this.squirrel.x_speed > 0) ? "right" : "left"
-
-      
+        if(this.squirrel.x_speed < 0) {this.squirrel.facing = "left"}
+        else if(this.squirrel.x_speed > 0) {this.squirrel.facing = "right"}
+        
         this.squirrel.y_speed *= this.squirrel.y_accelartion_jump
         if(ceil(this.squirrel.y_speed) === -1) {
             this.squirrel.y_speed = 5
@@ -222,14 +220,13 @@ class Level{
     }
 
     squirrel_fall(){
-        if(keyIsDown(LEFT_ARROW)) {
-            if(this.squirrel.x_speed - this.squirrel.x_acceleration_per_frame > this.squirrel.min_x_speed){this.squirrel.x_speed -= this.squirrel.x_acceleration_per_frame}}
-        if(keyIsDown(RIGHT_ARROW)) {
-            if(this.squirrel.x_speed + this.squirrel.x_acceleration_per_frame < this.squirrel.max_x_speed){this.squirrel.x_speed += this.squirrel.x_acceleration_per_frame}} 
+        this.squirrel.x_speed = (keyIsDown(LEFT_ARROW)) ? this.squirrel.min_x_speed : 0
+        this.squirrel.x_speed = (keyIsDown(RIGHT_ARROW)) ? this.squirrel.max_x_speed : this.squirrel.x_speed
         if(this.squirrel.x + this.squirrel.x_speed > this.x_offset && this.squirrel.x + this.squirrel.x_speed < this.grid_width * this.grid_size + this.x_offset){
             this.squirrel.x += this.squirrel.x_speed
         }
-        this.squirrel.facing = (this.squirrel.x_speed > 0) ? "right" : "left"
+        if(this.squirrel.x_speed < 0) {this.squirrel.facing = "left"}
+        else if(this.squirrel.x_speed > 0) {this.squirrel.facing = "right"}
 
         if(this.squirrel.y_speed * this.squirrel.y_accelartion_fall < this.squirrel.max_y_speed) {this.squirrel.y_speed *= this.squirrel.y_accelartion_fall}
         for(let w = 0; w < this.squirrel.y_speed; w ++){
@@ -249,10 +246,7 @@ class Level{
                 
             }
             coords = this.get_coords_by_px(this.squirrel.front_foot_x, this.squirrel.foot_y + (this.grid_view - floor(this.grid_view)) * this.grid_size + w)
-            console.log(coords)
-            console.log(this.grid[coords[0]][coords[1]])
             if(this.grid[coords[0]][coords[1]] instanceof Branch){
-                console.log("got branch")
                 if(this.get_y_plot(this.squirrel.x, this.grid[coords[0]][coords[1]]) - (this.grid_view - floor(this.grid_view)) * this.grid_size > this.squirrel.foot_y){
                     this.squirrel.y = this.get_y_plot(this.squirrel.x, this.grid[coords[0]][coords[1]]) - this.squirrel.height/2 - (this.grid_view - floor(this.grid_view)) * this.grid_size
                     this.squirrel.motion = "land"
@@ -352,7 +346,6 @@ class Level{
        else{image(this.squirrel.hit_box_left, this.squirrel.x, this.squirrel.y)}    }
   
     run(){
-        this.squirrel.find_hit_boxes()
         this.display_all()
         if(this.lethal_fall === true) {this.kill()}
 
@@ -374,6 +367,5 @@ class Level{
             else if(this.squirrel.motion === "walk"){this.squirrel_walk()}
             else if(this.squirrel.motion === null){this.squirrel_null()}*/
         }
-
     }
 }
