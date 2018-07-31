@@ -1,5 +1,5 @@
 class Branch{
-    constructor(grid, grid_size, base_col, base_row, height_in_cols, direction, image){
+    constructor(grid, grid_size, base_col, base_row, height_in_cols, direction){
         this.grid = grid
         this.grid_size = grid_size
         this.col = base_col
@@ -7,15 +7,6 @@ class Branch{
         this.size = height_in_cols //minimum 2 
         this.direction = direction
         this.angle = 5 // horizontal : vertical
-        this.img = image
-        this.img_col = this.col - this.size
-
-        if(this.direction === "right"){
-            this.img_row = this.row 
-        }
-        else{
-            this.img_row = this.row - this.size * this.angle
-        }
 
         let index_row = this.row
         for(let c = 0; c < this.size; c++){

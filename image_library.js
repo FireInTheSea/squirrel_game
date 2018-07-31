@@ -1,4 +1,4 @@
-class Images {
+class Image_Library{
     constructor(jump_image_count, fall_image_count){
         this.jump_image_count = jump_image_count
         this.fall_image_count = fall_image_count

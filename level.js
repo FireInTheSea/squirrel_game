@@ -22,10 +22,10 @@ class Level{
     }
 
     load_level1(){
-        this.grid[953][10] = new Branch(this.grid, this.grid_size, 953, 10, 3, 'left', branch1)
-        this.grid[970][25] = new Branch(this.grid, this.grid_size, 970, 25, 2, 'left', branch1)
-        this.grid[980][40] = new Branch(this.grid, this.grid_size, 980, 40, 3, 'right', branch1)
-        this.grid[985][30] = new Branch(this.grid, this.grid_size, 985, 30, 2, 'left', branch1)
+        this.grid[753][10] = new Branch(this.grid, this.grid_size, 753, 10, 3, 'left')
+        this.grid[770][25] = new Branch(this.grid, this.grid_size, 770, 25, 2, 'left')
+        this.grid[780][40] = new Branch(this.grid, this.grid_size, 780, 40, 3, 'right')
+        this.grid[785][30] = new Branch(this.grid, this.grid_size, 785, 30, 2, 'left')
 
     }
 

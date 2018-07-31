@@ -3,12 +3,13 @@ class Game{
         this.gs = "level"
         this.acorns = 0
 
-        this.level1 = new Level(800, level_images, squirrel_images, owl_images, pinecone_images, acorn_images)
-        this.level2 = new Level(1200, level_images, squirrel_images, owl_images, pinecone_images, acorn_images)
-        this.level3 = new Level(1800, level_images, squirrel_images, owl_images, pinecone_images, acorn_images)
+        this.level1 = new Level(800)
+        this.level2 = new Level(1200)
+        this.level3 = new Level(1800)
 
         this.current_level = this.level1
-        this.level_num = 1       
+        this.level_num = 1  
+        this.initialize_level()     
     }
 
     initialize_level(){
