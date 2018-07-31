@@ -34,24 +34,16 @@ class Squirrel {
 
     set_moition_rules(grid_size){
         this.motion = null
-        this.jump_type = null
 
         this.max_x_speed= 0.02 * innerHeight
         this.min_x_speed = -1 * this.max_x_speed
         this.x_acceleration_per_frame = 0.001 * innerHeight
         this.x_speed = 0
-
-        this.min_y_speed_cols = -1
-        this.max_y_speed_cols = 2
-        this.max_jump_height_cols = 80
-        this.y_speed_cols = 0
-
-        this.y_accelartion_jump = 0.9 //multiplied by y speed every frame
-
-        this.min_y_speed_px = this.min_y_speed_cols * grid_size
-        this.max_y_speed_px = this.max_y_speed_cols * grid_size
-        this.max_jump_height_px = this.max_jump_height_cols * grid_size
-        this.y_speed_px = 0
+       
+        this.min_y_speed = -0.03 * innerHeight
+        this.max_y_speed = 0.09 * innerHeight
+        this.y_accelartion_jump = 0.9
+        this.y_speed = 0
     }
 
     find_hit_boxes(){

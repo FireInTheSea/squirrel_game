@@ -228,38 +228,29 @@ class Level{
         }
     }
 
+
     squirrel_jump(){
         if(keyIsDown(LEFT_ARROW)) {
             if(this.squirrel.x_speed - this.squirrel.x_acceleration_per_frame > this.squirrel.min_x_speed){this.squirrel.x_speed -= this.squirrel.x_acceleration_per_frame}}
         if(keyIsDown(RIGHT_ARROW)) {
             if(this.squirrel.x_speed + this.squirrel.x_acceleration_per_frame < this.squirrel.max_x_speed){this.squirrel.x_speed += this.squirrel.x_acceleration_per_frame}} 
-        this.squirrel.x += this.squirrel.x_speed
+        if(this.squirrel.x + this.squirrel.x_speed > this.x_offset && this.squirrel.x + this.squirrel.x_speed < this.grid_width * this.grid_size + this.x_offset){
+            this.squirrel.x += this.squirrel.x_speed
+        }
         this.squirrel.facing = (this.squirrel.x_speed > 0) ? "right" : "left"
 
-        if(this.squirrel.jump_type === "pixels"){
-            this.squirrel.y_speed_px *= this.squirrel.y_accelartion_jump
-            if(floor(this.squirrel.y_speed_px) === 0) {
-                this.squirrel.y_speed_px = 0
-                this.squirrel.motion = "fall"
-                return
-            }
-            else{
-                this.squirrel.y += this.squirrel.y_speed_px
-            }
+      
+        this.squirrel.y_speed *= this.squirrel.y_accelartion_jump
+        if(ceil(this.squirrel.y_speed) === -1) {
+            this.squirrel.y_speed = 0.1
+            this.squirrel.motion = "fall"
+            return
         }
         else{
-            this.squirrel.y_speed_cols *= this.squirrel.y_accelartion_jump
-            if(this.squirrel.y_speed_cols > -0.005){
-                console.log("too slow, stopped jump")
-                this.squirrel.y_speed_cols = 0
-                this.squirrel.motion = "fall"
-                return
-            }
-            else{
-                this.grid_view += this.squirrel.y_speed_cols
-            }
-            
+            if(this.squirrel.y > 0.75 * innerHeight || 1 === 1) {this.squirrel.y += this.squirrel.y_speed}
+            else{this.grid_view += this.squirrel.y_speed/this.grid_size}
         }
+        
         if(this.squirrel.facing === "right") {image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)}
         else{image(this.squirrel.hit_box_left, this.squirrel.x, this.squirrel.y)}
     }
