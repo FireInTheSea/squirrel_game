@@ -1,7 +1,7 @@
 class Level{
     constructor(grid_height){
         this.lives = 3
-        
+        this.state = "level"
         this.grid_height = grid_height
         this.grid_width = 65
         this.visible_grid_height = 50
@@ -15,6 +15,10 @@ class Level{
         this.x_offset = innerWidth/2 - this.grid_size * this.grid_width/2
 
         this.squirrel = new Squirrel(innerWidth/2, 0.8 * innerHeight, this.grid_size)
+    }
+
+    place_objects(level_num){
+        if(level_num === 1) {this.load_level1()}
     }
 
     load_level1(){
@@ -110,6 +114,10 @@ class Level{
                     this.squirrel.x = center_x
                     this.squirrel.y = center_y - this.squirrel.height/2
                     this.squirrel.facing = branch.direction
+                    this.squirrel.motion = null
+                    this.squirrel.x_speed = 0
+                    this.squirrel.y_speed = 0
+                    //this.squirrel.current_branch = branch
                     //adjust position so that both feet are on branch
                     return
                 }
@@ -151,6 +159,7 @@ class Level{
                     this.squirrel.y = this.get_y_plot(this.squirrel.x, square) - this.squirrel.height/2 - (this.grid_view - floor(this.grid_view)) * this.grid_size
                     this.squirrel.motion = "land"
                     this.squirrel.x_speed = 0
+                    this.squirrel.y_speed = 0
                     return "landed"
                 }
                 else{
@@ -251,11 +260,9 @@ class Level{
     }
   
 
-    lethal_fall(){  // DEPRICATED
-        this.find_squirrel() 
-        if(this.squirrel.bottom_col > floor(this.grid_view) + this.visible_grid_height - 1){
-            this.kill()
-        }
+    lethal_fall(){ 
+        this.squirrel.find_hit_boxes()
+        return (this.squirrel.foot_y > 0.99 * innerHeight) ? true : false
     }
 
     hit_enemy(){  // DEPRICATED?
@@ -274,17 +281,22 @@ class Level{
         return false
     }
 
-    kill(){ //placeholder only
+    kill(){
         this.lives -= 1
-        this.squirrel.y = innerHeight/2
-        this.squirrel.x = innerWidth/2
+        console.log(this.lives)
+        if(this.lives > 0){
+            this.place_squirrel()
+        }
+        else{
+            this.state = "lose"
+        }
     }
     
     run(){
         this.display_all()
-        if(this.lethal_fall === true) {this.kill()}
 
-        else if(this.hit_enemy() === true) {this.kill()}
+        if(this.lethal_fall() === true) {this.kill()}
+        //else if(this.hit_enemy() === true) {this.kill()}
 
         else{
             if(this.squirrel.motion === "jump") {this.squirrel_jump()}
@@ -295,5 +307,7 @@ class Level{
                 else{image(this.squirrel.hit_box_left, this.squirrel.x, this.squirrel.y)}
             }
         }
+
+        return this.state
     }
 }

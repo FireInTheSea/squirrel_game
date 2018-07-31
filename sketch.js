@@ -1,9 +1,9 @@
 var game
-var branch1
-
+var images
 
 function preload(){
-  branch1 = loadImage("images/branch1.png")
+  images = new Images()
+  images.load_images()
 }
 
 
@@ -11,8 +11,8 @@ function setup() {
   createCanvas(innerWidth, innerHeight - 4)
   imageMode(CENTER) 
   frameRate(60)
+  images.resize_images()
   game = new Game()
-  branch1.resize(50, 50)
 }
 
 function draw() {
