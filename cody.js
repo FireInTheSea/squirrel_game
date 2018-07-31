@@ -42,7 +42,7 @@ class Squirrel {
        
         this.min_y_speed = -0.03 * innerHeight
         this.max_y_speed = 0.09 * innerHeight
-        this.y_accelartion_jump = 0.95
+        this.y_accelartion_jump = 0.93
         this.y_accelartion_fall = 1.05
         this.y_speed = 0
     }
