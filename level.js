@@ -283,9 +283,8 @@ class Level{
 
     kill(){
         this.lives -= 1
-        console.log(this.lives)
         if(this.lives > 0){
-            this.place_squirrel()
+            this.place_squirrel() //if no branches on screen, takes all lives
         }
         else{
             this.state = "lose"
