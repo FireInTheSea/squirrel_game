@@ -1,7 +1,7 @@
 class Level{
     constructor(grid_height){
         this.lives = 3
-        this.squirrel = new Squirrel(innerWidth/2, innerHeight/2)
+        
         this.grid_height = grid_height
         this.grid_width = 65
         this.visible_grid_height = 50
@@ -11,8 +11,10 @@ class Level{
         for(add_col_num = 0; add_col_num < this.grid_height; add_col_num ++){
             this.grid[add_col_num] = new Array(this.grid_width)
         }
-        this.grid_view = this.grid_height - this.visible_grid_height
+        this.grid_view = this.grid_height - this.visible_grid_height //will not stay as int after scrolling
         this.x_offset = innerWidth/2 - this.grid_size * this.grid_width/2
+
+        this.squirrel = new Squirrel(innerWidth/2, innerHeight/2, this.grid_size)
     }
 
     load_level1(){
@@ -37,7 +39,7 @@ class Level{
        return [x_px, y_px]
     }
 
-    predict_land(){
+    predict_land(){ //depricated
         let coords = this.get_coords_by_px(this.squirrel.x, this.squirrel.y)
         let test_start_col = coords[0] + this.squirrel.height_in_cols - 1
         let test_start_row = coords[1]
@@ -160,23 +162,9 @@ class Level{
     }
 
     squirrel_fall(){
-        let branch_coords = this.predict_land()
-        if(branch_coords != false){
-            let branch_pointer = this.grid[branch_coords[0]][branch_coords[1]]
-            //let branch_pixles = this.get_px_by_coords(branch_coords[0], branch_coords[1])
-            //let branch_y_plot = this.get_y_plot(branch_pixles[0], branch_pointer)
-            let branch_y_plot = this.get_y_plot(this.squirrel.x, branch_pointer)
-            this.squirrel.find_hit_boxes()
-            let y_dist = floor(branch_y_plot - this.squirrel.feet_box_end_y)    
-            if(y_dist - this.squirrel.fall_speed_y < this.squirrel.start_land_dist) {
-                this.squirrel.y = floor(branch_y_plot - this.squirrel.start_land_dist - this.squirrel.height/2)
-                this.squirrel.motion = 'land'
-                this.squirrel_land()
-            }
-        }
-        //add counter for distance fallen and adjust speed accordingly
-        if(this.squirrel.motion === "fall"){
-            this.squirrel.y += this.squirrel.fall_speed_y
+
+        
+            /* this.squirrel.y += this.squirrel.fall_speed_y
             if(keyIsDown(LEFT_ARROW)){
                 this.squirrel.x -= this.squirrel.fly_speed_x
                 this.squirrel.facing = "left"
@@ -186,8 +174,8 @@ class Level{
                 this.squirrel.facing = "right"
             }
             if(this.squirrel.facing === "right") {image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)}
-            else{image(this.squirrel.hit_box_left, this.squirrel.x, this.squirrel.y)}
-        }
+            else{image(this.squirrel.hit_box_left, this.squirrel.x, this.squirrel.y)} */
+        
     }
 
     squirrel_land(){
@@ -237,27 +225,40 @@ class Level{
     }
 
     squirrel_jump(){
-        if(this.squirrel.rise_since_jump >= this.squirrel.max_jump_height) {this.squirrel.motion = "fall"; this.squirrel_fall()}
-        
-        else{ 
-            if(keyIsDown(LEFT_ARROW)) {this.squirrel.x -= this.squirrel.fly_speed_x; this.squirrel.facing = "left"}
-            if(keyIsDown(RIGHT_ARROW)) {this.squirrel.x += this.squirrel.fly_speed_x; this.squirrel.facing = "right"}
+        if(keyIsDown(LEFT_ARROW)) {
+            if(this.squirrel.x_speed - this.squirrel.x_acceleration_per_frame > this.squirrel.min_x_speed){this.squirrel.x_speed -= this.squirrel.x_acceleration_per_frame}
+            this.squirrel.facing = "left"
+        }
+        if(keyIsDown(RIGHT_ARROW)) {
+            if(this.squirrel.x_speed + this.squirrel.x_acceleration_per_frame < this.squirrel.max_x_speed){this.squirrel.x_speed += this.squirrel.x_acceleration_per_frame}
+            this.squirrel.facing = "right"
+        } 
 
-            if(this.squirrel.rise_since_jump < 90 * this.squirrel.max_jump_height/100){
-                this.squirrel.y -= this.squirrel.jump_speed_y
-                this.squirrel.rise_since_jump += this.squirrel.jump_speed_y
-            }
-            else if(this.squirrel.rise_since_jump < 95 * this.squirrel.max_jump_height/100){
-                this.squirrel.y -= 2 * this.squirrel.jump_speed_y/3
-                this.squirrel.rise_since_jump +=  2 * this.squirrel.jump_speed_y/3
-            }
-            else if(this.squirrel.rise_since_jump < 98 * this.squirrel.max_jump_height/100){
-                this.squirrel.y -= this.squirrel.jump_speed_y/3
-                this.squirrel.rise_since_jump += this.squirrel.jump_speed_y/3
+        this.squirrel.x += this.squirrel.x_speed
+        if(this.squirrel.jump_type === "pixels"){
+            this.squirrel.y_speed_px *= this.squirrel.y_accelartion_jump
+            console.log("current y speed is", this.squirrel.y_speed_px)
+            console.log("pixels jumped is", this.squirrel.px_jumped)
+            console.log("max jump height is", this.squirrel.max_jump_height_px)
+            if(this.squirrel.px_jumped + this.squirrel.y_speed_px <= this.squirrel.max_jump_height_px){
+                console.log("changing y pos")
+                this.squirrel.y += this.squirrel.y_speed_px
+                this.squirrel.px_jumped += this.squirrel.y_speed_px
             }
             else{
-                this.squirrel.y -= this.squirrel.jump_speed_y/10
-                this.squirrel.rise_since_jump += this.squirrel.jump_speed_y/10
+                this.squirrel.motion = "fall"
+                return
+            }
+        }
+        else{
+            this.squirrel.y_speed_cols *= this.squirrel.y_accelartion_jump
+            if(this.squirrel.cols_jumped + this.squirrel.y_speed_cols <= this.squirrel.max_jump_height_cols){
+                this.grid_view -= this.squirrel.y_speed_cols
+                this.squirrel.cols_jumped += this.squirrel.y_speed_cols
+            }
+            else{
+                this.squirrel.motion = "fall"
+                return
             }
         }
         if(this.squirrel.facing === "right") {image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)}
@@ -354,12 +355,15 @@ class Level{
         else if(this.hit_enemy() === true) {this.kill()}
 
         else{
-            if(this.squirrel.motion === "land") {this.squirrel_land()}
+            if(this.squirrel.motion === "jump") {this.squirrel_jump()}
+            if(this.squirrel.motion === "fall") {this.squirrel_fall()}
+
+            /*if(this.squirrel.motion === "land") {this.squirrel_land()}
             else if(this.squirrel.motion === "climb") {this.squirrel_climb()}
             else if(this.squirrel.motion === "fall") {this.squirrel_fall()}
             else if(this.squirrel.motion === "jump") {this.squirrel_jump()}
             else if(this.squirrel.motion === "walk"){this.squirrel_walk()}
-            else if(this.squirrel.motion === null){this.squirrel_null()}
+            else if(this.squirrel.motion === null){this.squirrel_null()}*/
         }
 
     }

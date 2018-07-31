@@ -1,5 +1,5 @@
 class Squirrel {
-    constructor(center_x, center_y) {
+    constructor(center_x, center_y, grid_size) {
         this.x = center_x
         this.y = center_y
         this.width = 30 * innerHeight/100
@@ -12,7 +12,7 @@ class Squirrel {
         this.current_branch = null
         
         this.loadImages()
-        this.set_moition_rules()
+        this.set_moition_rules(grid_size)
     } 
 
     loadImages(){
@@ -32,107 +32,61 @@ class Squirrel {
        this.hit_box_left = loadImage("/images/hit_box_left.png", img => {img.resize(this.width, this.height)})
     }
 
-    set_moition_rules(){//change hard coded numbers to floored percentages of innerHeight
+    set_moition_rules(grid_size){//change hard coded numbers to percentages of innerHeight 
         this.motion = null
+        this.jump_type = null //pixles or cols, depending on squirrel.y at jump start
 
-        this.fly_speed_x = 2 * innerHeight/100
+        this.max_x_speed= 0.02 * innerHeight
+        this.min_x_speed = -1 * this.max_x_speed
+        this.x_acceleration_per_frame = 0.003 * innerHeight
+        this.x_speed = 0
 
-        this.max_jump_height = 200
-        this.jump_speed_y = 2 * innerHeight/100
-        this.rise_since_jump = 0
-        
-        this.fall_speed_y = 3 * innerHeight/100
+        this.max_y_speed_cols = 0.5
+        this.min_y_speed_cols = -2
+        this.max_jump_height_cols = 8
+        this.y_speed_cols = 0
+        this.cols_jumped = 0
 
-        this.walk_speed_x = 4
+        this.y_accelartion_jump = 0.9 //multiplied by y speed every frame
 
-        this.start_land_dist = 70 
+        this.max_y_speed_px = this.max_y_speed_cols * grid_size
+        this.min_y_speed_px = this.min_y_speed_cols * grid_size
+        this.max_jump_height_px = this.max_jump_height_cols * grid_size
+        this.y_speed_px = 0
+        this.px_jumped = 0
     }
 
     find_hit_boxes(){
-        let main_box_width = 45 * this.width/100
-        let main_box_height = this.height/3
-        this.main_box_start_y = this.y + this.height/20
-        this.main_box_end_y = this.main_box_start_y + main_box_height
+        let main_width = 45 * this.width/100
+        let main_height = this.height/3
+        this.main_start_y = this.y + this.height/20
+        this.main_end_y = this.main_start_y + main_height
 
-        let feet_box_width = 45 * this.width/100
-        let feet_box_height = this.height/3
-        this.feet_box_end_y = this.y + this.height/2
-        this.feet_box_start_y = this.feet_box_end_y - feet_box_height
+        this.foot_y = this.y + this.height/2
 
         if(this.facing === "right"){
-            this.main_box_start_x = this.x - this.width/20
-            this.main_box_end_x = this.main_box_start_x + main_box_width
+            this.main_start_x = this.x - this.width/20
+            this.main_end_x = this.main_start_x + main_width
             
-            this.feet_box_start_x = this.x - this.width/20
-            this.feet_box_end_x = this.feet_box_start_x + feet_box_width
+            this.back_foot_x = this.x - this.width/20
+            this.front_foot_x = this.x + 0.45 * this.width
         }
 
         else if(this.facing === "left"){
-            this.main_box_end_x = this.x + this.width/20
-            this.main_box_start_x = this.main_box_end_x - main_box_width
+            this.main_end_x = this.x + this.width/20
+            this.main_start_x = this.main_end_x - main_width
 
-            this.feet_box_end_x = this.x + this.width/20
-            this.feet_box_start_x = this.feet_box_end_x - feet_box_width
+            this.back_foot_x = this.x + this.width/20
+            this.front_foot_x = this.x - 0.45 * this.width
         }
     }
 
-    in_hit_box(x, y, box_start_x, box_start_y, box_end_x, box_end_y){
-        if(x > box_start_x && x < box_end_x && y > box_start_y && y < box_end_y){
+    in_hit_box(x, y){
+        this.find_hit_boxes()
+        if(x > this.main_start_x && x < this.main_end_x && y > this.main_start_y && y < this.main_end_y){
             return true
         }
         return false
-    }
-
-    move(){ //in process of being replaced
-        console.log("called depricated method Squirrel.move()")
-        if(this.motion === "jump"){
-            this.jump()
-        }
-        else if(this.motion === "fall"){
-            if(this.is_on_branch === true){
-                this.motion = null
-            }
-            else{
-                this.fall()
-            }
-        }
-    }
-
-    jump(){ //in process of being replaced
-        if(this.rise_since_jump < this.max_jump_height){
-            if(this.rise_since_jump < 0.9 * this.max_jump_height){
-                this.y -= this.jump_speed_y
-                this.rise_since_jump += this.jump_speed_y
-            }
-            else{
-                this.y -= this.jump_speed_y/2
-                this.rise_since_jump += this.jump_speed_y/2
-            }
-            if(keyIsDown(LEFT_ARROW)){
-                this.x -= this.fly_speed_x
-            }
-            if (keyIsDown(RIGHT_ARROW)){
-                this.x += this.fly_speed_x
-            }
-        }
-        else{
-            this.motion = "fall"
-            this.rise_since_jump = 0
-        }
-        
-        
-    }
-
-    fall(){ //in process of being replaced
-        this.y += this.fall_speed_y
-        if(keyIsDown(LEFT_ARROW)){
-            this.x -= this.fly_speed_x
-        }
-        if (keyIsDown(RIGHT_ARROW)){
-            this.x += this.fly_speed_x
-        }
-            
-        
     }
 }
 
