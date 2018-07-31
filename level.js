@@ -38,6 +38,24 @@ class Level{
        let x_px = (row * this.grid_size + this.x_offset)
        return [x_px, y_px]
     }
+    
+    place_squirrel(){
+        for(let col = this.visible_grid_height - 1; col > 0; col -= 1){
+            for(let row = 0; row < this.grid_width; row ++){
+                if(this.grid[floor(this.grid_view) + col][row] instanceof Branch){
+                    let branch = this.grid[floor(this.grid_view) + col][row]
+                    let center_row = (branch.direction === "right") ? branch.row + (branch.size * branch.angle)/2 : branch.row - (branch.size * branch.angle)/2
+                    let center_x = center_row * this.grid_size + this.x_offset
+                    let center_y = this.get_y_plot(center_x, branch)
+                    this.squirrel.x = center_x
+                    this.squirrel.y = center_y - this.squirrel.height/2
+                    this.squirrel.facing = branch.direction
+                    //adjust position so that both feet are on branch
+                    return
+                }
+            }
+        }
+    }
 
 
     display_grid(){
@@ -168,7 +186,6 @@ class Level{
                     return "landed"
                 }
                 else{
-                    console.log("HERE")
                     this.squirrel.y = this.get_y_plot(this.squirrel.x, square) - this.squirrel.height/2 - (this.grid_view - floor(this.grid_view)) * this.grid_size - this.squirrel.y_speed/20
                 }
             }
