@@ -36,26 +36,27 @@ class Squirrel {
     }
 
     find_hit_boxes(){
-        this.main_start_y = this.y + 0.1 * this.height
-        this.main_end_y = this.y + 0.4 * this.height
+        let main_width = 45 * this.width/100
+        let main_height = this.height/3
+        this.main_start_y = this.y + this.height/20
+        this.main_end_y = this.main_start_y + main_height
 
         this.foot_y = this.y + 0.48 * this.height
 
         if(this.facing === "right"){
-            this.main_start_x = this.x + 0.27 * this.width
-            this.main_end_x = this.x - 0.1 * this.width
+            this.main_start_x = this.x - this.width/20
+            this.main_end_x = this.main_start_x + main_width
             
-            this.back_foot_x = this.x - 0.05 * this.width
-            this.front_foot_x = this.x + 0.27 * this.width
+            this.back_foot_x = this.x - 0.15 * this.width
+            this.front_foot_x = this.x + 0.3 * this.width
         }
 
         else if(this.facing === "left"){
-            this.main_start_x = this.x - 0.27 * this.width
-            this.main_end_x = this.x + 0.1 * this.width
-            
+            this.main_end_x = this.x + this.width/20
+            this.main_start_x = this.main_end_x - main_width
 
-            this.back_foot_x = this.x + 0.05 * this.width
-            this.front_foot_x = this.x - 0.27 * this.width
+            this.back_foot_x = this.x + 0.15 * this.width
+            this.front_foot_x = this.x - 0.3 * this.width
         }
         rectMode(CORNERS)
         fill("purple")
