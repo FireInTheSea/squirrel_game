@@ -1,8 +1,11 @@
 var game
 var images
+var squirrel_height =  11 * innerHeight/100
+var squirrel_width = 2.88 * squirrel_height
+
 
 function preload(){
-  //images = new Image_Library()
+  images = new Image_Library(1, 1)
 }
 
 
@@ -10,7 +13,7 @@ function setup() {
   createCanvas(innerWidth, innerHeight - 4)
   imageMode(CENTER) 
   frameRate(60)
-  //images.resize_images()
+  images.resize_images()
   game = new Game()
 }
 

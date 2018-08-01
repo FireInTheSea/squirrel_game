@@ -26,11 +26,15 @@ class Branch{
     }
 
     display(grid_view, grid_size, x_offset, col, row){
-        if(col === this.col && row === this.row){
-            //this.img.resize(this.size * this.grid_size * this.angle, this.size * this.grid_size)
-            //image(this.img, this.img_row * grid_size + x_offset, (this.img_col - grid_view) * grid_size)
-        } 
         fill(200, 200, 50)
         rect(row * this.grid_size + x_offset, (col - floor(grid_view)) * this.grid_size, this.grid_size, this.grid_size)
+
+        if((col === this.col && row === this.row) || 1 === 1){
+            if(this.direction === "right"){
+                imageMode(CORNER)
+                image(images.branches[this.size], this.row * grid_size + x_offset, (this.col - grid_view) * grid_size - this.size * grid_size * 0.7)
+                imageMode(CENTER)
+            }
+        } 
     }
 }

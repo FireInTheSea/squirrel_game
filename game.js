@@ -13,7 +13,7 @@ class Game{
     }
 
     initialize_level(){
-        //handle acorns in either game or level
+            //handle acorns in either game or level
         this.current_level.place_objects(this.level_num)
         this.current_level.place_squirrel()
     }

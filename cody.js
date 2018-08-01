@@ -1,33 +1,21 @@
 class Squirrel {
-    constructor(center_x, center_y, grid_size) {
+    constructor(center_x, center_y, grid_size, width, height) {
         this.x = center_x
         this.y = center_y
-        this.width = 30 * innerHeight/100
-        this.height = 18 * innerHeight/100
+        this.width = width 
+        this.height = height
         this.height_in_cols = 4 // distance in collumns from image center to bottom
         this.width_in_rows = 7 // distance in rows from image center to front of front feet hit box
 
         this.facing = "right"
         this.state = "standing"
-        this.current_branch = null
+        //this.current_branch = null
         
         this.loadImages()
         this.set_moition_rules(grid_size)
     } 
 
-    loadImages(){
-        /*this.stand_cycle_right = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
-        this.stand_cycle_left = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
-        this.run_cycle_right = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
-        this.run_cycle_left = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
-        this.jump_cycle_right = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
-        this.jump_cycle_left = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
-        this.fall_cycle_right = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
-        this.fall_cycle_left = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
-        this.land_cycle_right = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
-        this.land_cycle_left = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
-        this.die_cycle = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]*/
-       //this.hit_box_left = [loadImage("/images/.png", img => {img.resize(this.width, this.height)})]
+    loadImages(){ //temporary test method
        this.hit_box_right = loadImage("/images/hit_box_right.png", img => {img.resize(this.width, this.height)})
        this.hit_box_left = loadImage("/images/hit_box_left.png", img => {img.resize(this.width, this.height)})
     }

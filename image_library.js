@@ -1,45 +1,80 @@
 class Image_Library{
-    constructor(jump_image_count, fall_image_count){
+    constructor(jump_image_count, stand_image_count){
         this.jump_image_count = jump_image_count
-        this.fall_image_count = fall_image_count
+        this.stand_image_count = stand_image_count
+
+        this.squirrel = {}
+        this.squirrel.right = {}
+        this.squirrel.left = {}
+
         this.load_images()
     }
 
     load_images(){
         this.full_life = loadImage("images/full_life.png")
         this.empty_life = loadImage("images/empty_life.png")
-        this.load_jump_images()
+        this.load_branch_images()
+        //this.load_jump_images()
+        this.load_stand_images()
     }
 
     resize_images(){
         this.full_life.resize(0.03 * innerHeight, 0.03 * innerHeight)
         this.empty_life.resize(0.03 * innerHeight, 0.03 * innerHeight)
-        this.resize_jump_images()
+        this.resize_branch_images()
+        //this.resize_jump_images()
+        this.resize_stand_images()
+    }
+
+    load_branch_images(){
+        this.branches = [null, null]
+        for(let i = 2; i <= 6; i ++){
+            let image = loadImage("images/tree/branch_" + i + ".png")
+            this.branches[i] = image
+        }
     }
 
     load_jump_images(){
         this.squirrel.left.jump = []
-        for(let i = 0; i < this.jump_image_count; i ++){
-            let image = loadImage("images/left_squirrel_jump" + i + ".png")
-            this.squirrel.left.jump.append(image)
-        }
-
         this.squirrel.right.jump = []
         for(let i = 0; i < this.jump_image_count; i ++){
-            let image = loadImage("images/right_squirrel_jump" + i + ".png")
-            this.squirrel.right.jump.append(image)
+            let image1 = loadImage("images/left_squirrel_jump_" + i + ".png")
+            this.squirrel.left.jump.push(image1)
+            let image2 = loadImage("images/right_squirrel_jump_" + i + ".png")
+            this.squirrel.right.jump.push(image2)
+        }
+    }
+
+    load_stand_images(){
+        this.squirrel.right.stand = []
+        this.squirrel.left.stand = []
+        for(let i  = 0; i < this.stand_image_count; i++){
+            let image1 = loadImage("images/s_r_stand_" + i + ".png")
+            this.squirrel.right.stand.push(image1)
+            let image2 = loadImage("images/s_l_stand_" + i + ".png")
+            this.squirrel.left.stand.push(image2)
+        }
+
+    }
+
+    resize_branch_images(){
+        for(let i = 2; i <= 6; i ++){
+            this.branches[i].resize( 0.02 * innerHeight * i * 5, 0.02 * innerHeight * i)
         }
     }
 
     resize_jump_images(){
         for(let i = 0; i < this.jump_image_count; i ++){
-            this.squirrel.left.jump[i].resize(0.30 *innerHeight, 0.18 * innerHeight)
-        }
-
-        for(let i = 0; i < this.jump_image_count; i ++){
-            this.squirrel.right.jump[i].resize(0.30 *innerHeight, 0.18 * innerHeight)
+            this.squirrel.right.jump[i].resize(squirrel_width, squirrel_height)
+            this.squirrel.left.jump[i].resize(squirrel_width, squirrel_height)
         }
     }
 
+    resize_stand_images(){
+        for(let i  = 0; i < 1; i++){
+            this.squirrel.right.stand[i].resize(squirrel_width, squirrel_height)
+            this.squirrel.left.stand[i].resize(squirrel_width, squirrel_height)
+        }
+    }
     
 }

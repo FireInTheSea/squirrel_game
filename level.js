@@ -14,7 +14,7 @@ class Level{
         this.grid_view = this.grid_height - this.visible_grid_height //will not stay as int after scrolling
         this.x_offset = innerWidth/2 - this.grid_size * this.grid_width/2
 
-        this.squirrel = new Squirrel(innerWidth/2, 0.8 * innerHeight, this.grid_size)
+        this.squirrel = new Squirrel(innerWidth/2, 0.8 * innerHeight, this.grid_size, squirrel_width, squirrel_height)
     }
 
     place_objects(level_num){
@@ -25,6 +25,7 @@ class Level{
         this.grid[753][10] = new Branch(this.grid, this.grid_size, 753, 10, 3, 'left')
         this.grid[770][25] = new Branch(this.grid, this.grid_size, 770, 25, 2, 'left')
         this.grid[780][40] = new Branch(this.grid, this.grid_size, 780, 40, 3, 'right')
+        this.grid[770][40] = new Branch(this.grid, this.grid_size, 770, 40, 3, 'right')
         this.grid[785][30] = new Branch(this.grid, this.grid_size, 785, 30, 2, 'left')
 
     }
@@ -43,11 +44,11 @@ class Level{
         for(let col = 0; col < this.visible_grid_height; col ++){
             for(let row = 0; row < this.grid_width; row ++){
                 if(this.grid[floor(this.grid_view) + col][row] instanceof Branch){
-                    this.grid[floor(this.grid_view) + col][ row].display(floor(this.grid_view), this.grid_size, this.x_offset, floor(this.grid_view) + col, row)
-                    for(let x_plot = row * this.grid_size + this.x_offset; x_plot < (row + 1) * this.grid_size + this.x_offset; x_plot += 1){
-                        ellipse(x_plot, this.get_y_plot(x_plot, this.grid[floor(this.grid_view) + col][row]), 1, 1)
+                    this.grid[floor(this.grid_view) + col][ row].display(this.grid_view, this.grid_size, this.x_offset, floor(this.grid_view) + col, row)
+                    //for(let x_plot = row * this.grid_size + this.x_offset; x_plot < (row + 1) * this.grid_size + this.x_offset; x_plot += 1){
+                        //ellipse(x_plot, this.get_y_plot(x_plot, this.grid[floor(this.grid_view) + col][row]), 1, 1)
 
-                    }
+                    //}
                 }
             }
         }
@@ -144,7 +145,7 @@ class Level{
             return
         }
         else{
-            if(this.squirrel.y > 0.6 * innerHeight) {this.squirrel.y += this.squirrel.y_speed}
+            if(this.squirrel.y > 0.5 * innerHeight) {this.squirrel.y += this.squirrel.y_speed}
             else{this.grid_view += this.squirrel.y_speed/this.grid_size}
         }
         
@@ -183,6 +184,10 @@ class Level{
         this.squirrel.y += this.squirrel.y_speed
         if(this.squirrel.facing === "right") {image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)}
         else{image(this.squirrel.hit_box_left, this.squirrel.x, this.squirrel.y)}
+    }
+
+    squirrel_land(){
+        this.squirrel.motion = null
     }
 
     squirrel_climb(){ // DEPRICATED
@@ -255,8 +260,8 @@ class Level{
     }
      
     squirrel_null(){ //placeholder
-       if(this.squirrel.facing === "right") {image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)}
-       else{image(this.squirrel.hit_box_left, this.squirrel.x, this.squirrel.y)}    
+       if(this.squirrel.facing === "right") {image(images.squirrel.right.stand[0], this.squirrel.x, this.squirrel.y)}
+       else{image(images.squirrel.left.stand[0], this.squirrel.x, this.squirrel.y)}    
     }
   
 
@@ -300,6 +305,7 @@ class Level{
         else{
             if(this.squirrel.motion === "jump") {this.squirrel_jump()}
             if(this.squirrel.motion === "fall") {this.squirrel_fall()}
+            if(this.squirrel.motion === "land") {this.squirrel_land()}
             if(this.squirrel.motion === null) {this.squirrel_null()}
             if(this.squirrel.motion != "jump" && this.squirrel.motion != "fall" && this.squirrel.motion != null){
                 if(this.squirrel.facing === "right") {image(this.squirrel.hit_box_right, this.squirrel.x, this.squirrel.y)}
