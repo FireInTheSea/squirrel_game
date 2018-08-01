@@ -32,7 +32,12 @@ class Branch{
         if((col === this.col && row === this.row) || 1 === 1){
             if(this.direction === "right"){
                 imageMode(CORNER)
-                image(images.branches[this.size], this.row * grid_size + x_offset, (this.col - grid_view) * grid_size - this.size * grid_size * 0.58)
+                image(images.branches.right[this.size], this.row * grid_size + x_offset, (this.col - grid_view) * grid_size - this.size * grid_size * 0.6)
+                imageMode(CENTER)
+            }
+            else{
+                imageMode(CORNER)
+                image(images.branches.left[this.size], (this.row - this.size * this.angle) * grid_size + x_offset + grid_size * 0.8, (this.col - grid_view) * grid_size - this.size * grid_size * 0.6)
                 imageMode(CENTER)
             }
         } 

@@ -6,6 +6,7 @@ class Image_Library{
         this.squirrel = {}
         this.squirrel.right = {}
         this.squirrel.left = {}
+        this.branches = {}
 
         this.load_images()
     }
@@ -27,10 +28,13 @@ class Image_Library{
     }
 
     load_branch_images(){
-        this.branches = [null, null]
+        this.branches.right = [null, null]
+        this.branches.left = [null, null]
         for(let i = 2; i <= 6; i ++){
-            let image = loadImage("images/tree/branch_" + i + ".png")
-            this.branches[i] = image
+            let image1 = loadImage("images/tree/branch_" + i + "_right.png")
+            this.branches.right[i] = image1
+            let image2 = loadImage("images/tree/branch_" + i + "_left.png")
+            this.branches.left[i] = image2
         }
     }
 
@@ -59,7 +63,8 @@ class Image_Library{
 
     resize_branch_images(){
         for(let i = 2; i <= 6; i ++){
-            this.branches[i].resize( 0.02 * innerHeight * i * 5, 0.02 * innerHeight * i)
+            this.branches.right[i].resize( 0.02 * innerHeight * i * 5, 0.02 * innerHeight * i)
+            this.branches.left[i].resize( 0.02 * innerHeight * i * 5, 0.02 * innerHeight * i)
         }
     }
 

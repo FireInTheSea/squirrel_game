@@ -298,7 +298,6 @@ class Level{
     
     run(){
         this.display_all()
-        this.squirrel.find_hit_boxes()
 
         if(this.lethal_fall() === true) {this.kill()}
         //else if(this.hit_enemy() === true) {this.kill()}

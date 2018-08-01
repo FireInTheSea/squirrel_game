@@ -57,13 +57,13 @@ class Squirrel {
             this.back_foot_x = this.x + 0.05 * this.width
             this.front_foot_x = this.x - 0.27 * this.width
         }
-        rectMode(CORNERS)
+        /*rectMode(CORNERS)
         fill("purple")
         rect(this.main_start_x, this.main_start_y, this.main_end_x, this.main_end_y)
         rectMode(CORNER)
         fill("red")
         ellipse(this.back_foot_x, this.foot_y, 8, 8)
-        ellipse(this.front_foot_x, this.foot_y, 8, 8)
+        ellipse(this.front_foot_x, this.foot_y, 8, 8)*/
 
 
     }
