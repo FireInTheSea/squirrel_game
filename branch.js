@@ -26,8 +26,8 @@ class Branch{
     }
 
     display(grid_view, grid_size, x_offset, col, row){
-        fill(200, 200, 50)
-        rect(row * this.grid_size + x_offset, (col - floor(grid_view)) * this.grid_size, this.grid_size, this.grid_size)
+        //fill(200, 200, 50)
+        //rect(row * this.grid_size + x_offset, (col - floor(grid_view)) * this.grid_size, this.grid_size, this.grid_size)
 
         if((col === this.col && row === this.row) || 1 === 1){
             if(this.direction === "right"){
@@ -37,7 +37,7 @@ class Branch{
             }
             else{
                 imageMode(CORNER)
-                image(images.branches.left[this.size], (this.row - this.size * this.angle) * grid_size + x_offset + grid_size * 0.8, (this.col - grid_view) * grid_size - this.size * grid_size * 0.6)
+                image(images.branches.left[this.size], (this.row - this.size * this.angle) * grid_size + x_offset + grid_size * 0.8, (this.col - grid_view) * grid_size - this.size * grid_size * 0.5)
                 imageMode(CENTER)
             }
         } 

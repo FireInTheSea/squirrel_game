@@ -63,8 +63,8 @@ class Image_Library{
 
     resize_branch_images(){
         for(let i = 2; i <= 6; i ++){
-            this.branches.right[i].resize( 0.02 * innerHeight * i * 5, 0.02 * innerHeight * i)
-            this.branches.left[i].resize( 0.02 * innerHeight * i * 5, 0.02 * innerHeight * i)
+            this.branches.right[i].resize( 0.019 * innerHeight * i * 5, 0.02 * innerHeight * i)
+            this.branches.left[i].resize( 0.019 * innerHeight * i * 5, 0.02 * innerHeight * i)
         }
     }
 
