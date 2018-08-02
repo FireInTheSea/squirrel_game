@@ -22,11 +22,11 @@ class Level{
     }
 
     load_level1(){
-        this.grid[753][15] = new Branch(this.grid, this.grid_size, 753, 15, 3, 'left')
-        this.grid[770][25] = new Branch(this.grid, this.grid_size, 770, 25, 2, 'left')
-        this.grid[780][40] = new Branch(this.grid, this.grid_size, 780, 40, 2, 'right')
-        this.grid[770][40] = new Branch(this.grid, this.grid_size, 770, 40, 3, 'right')
-        this.grid[785][30] = new Branch(this.grid, this.grid_size, 785, 30, 2, 'left')
+        this.grid[745][10] = new Branch(this.grid, this.grid_size, 745, 10, 6, 'right')
+        this.grid[755][10] = new Branch(this.grid, this.grid_size, 755, 10, 5, 'right')
+        this.grid[765][10] = new Branch(this.grid, this.grid_size, 765, 10, 4, 'right')
+        this.grid[775][10] = new Branch(this.grid, this.grid_size, 775, 10, 3, 'right')
+        this.grid[785][10] = new Branch(this.grid, this.grid_size, 785, 10, 2, 'right')
 
     }
 
@@ -45,10 +45,10 @@ class Level{
             for(let row = 0; row < this.grid_width; row ++){
                 if(this.grid[floor(this.grid_view) + col][row] instanceof Branch){
                     this.grid[floor(this.grid_view) + col][ row].display(this.grid_view, this.grid_size, this.x_offset, floor(this.grid_view) + col, row)
-                    //for(let x_plot = row * this.grid_size + this.x_offset; x_plot < (row + 1) * this.grid_size + this.x_offset; x_plot += 1){
+                    for(let x_plot = row * this.grid_size + this.x_offset; x_plot < (row + 1) * this.grid_size + this.x_offset; x_plot += 1){
                         //ellipse(x_plot, this.get_y_plot(x_plot, this.grid[floor(this.grid_view) + col][row]), 1, 1)
 
-                    //}
+                    }
                 }
             }
         }
@@ -297,6 +297,9 @@ class Level{
     }
     
     run(){
+        for(let q = 0; q < 10; q ++){
+            this.get_y_plot(500, this.grid[785][10])
+        }
         this.display_all()
 
         if(this.lethal_fall() === true) {this.kill()}
