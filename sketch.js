@@ -19,7 +19,7 @@ function setup() {
 }
 
 function draw() {
-  background(150)
+  background(190, 240, 255)
   game.run()
   //console.log(frameRate())
   //clear()
