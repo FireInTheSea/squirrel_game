@@ -1,8 +1,8 @@
 class Level{
     constructor(grid_height){
         this.trunk_x = innerWidth/2 - images.trunk.width/2
-        this.trunk_y1 = 0
-        this.trunk_y2 = images.trunk.height - 1
+        this.trunk_y1 = - innerHeight
+        this.trunk_y2 = 0
         this.lives = 3
         this.state = "level"
         this.grid_height = grid_height
@@ -25,16 +25,115 @@ class Level{
     }
 
     load_level1(){
-        this.grid[735][40] = new Branch(this.grid, this.grid_size, 735, 40, 6, 'right')
-        this.grid[750][40] = new Branch(this.grid, this.grid_size, 750, 40, 5, 'right')
-        this.grid[763][38] = new Branch(this.grid, this.grid_size, 763, 38, 3, 'right')
-        this.grid[775][40] = new Branch(this.grid, this.grid_size, 775, 40, 4, 'right')
-        this.grid[785][40] = new Branch(this.grid, this.grid_size, 785, 40, 2, 'right')
-        this.grid[725][30] = new Branch(this.grid, this.grid_size, 725, 30, 2, 'left')
-        this.grid[740][27] = new Branch(this.grid, this.grid_size, 740, 27, 5, 'left')
-        this.grid[765][33] = new Branch(this.grid, this.grid_size, 765, 33, 4, 'left')
-        this.grid[775][25] = new Branch(this.grid, this.grid_size, 775, 25, 3, 'left')
-        this.grid[785][15] = new Branch(this.grid, this.grid_size, 785, 15, 2, 'left')
+        this.grid[790][40] = new Branch(this.grid, this.grid_size, 790, 40, 4, 'right')        
+        this.grid[785][24] = new Branch(this.grid, this.grid_size, 785, 24, 3, 'left')
+        this.grid[781][38] = new Branch(this.grid, this.grid_size, 781, 38, 2, 'right')
+        this.grid[773][27] = new Branch(this.grid, this.grid_size, 773, 27, 4, 'left')
+        this.grid[765][38] = new Branch(this.grid, this.grid_size, 765, 38, 4, 'right')
+        this.grid[760][26] = new Branch(this.grid, this.grid_size, 760, 26, 5, 'left')
+        this.grid[748][39] = new Branch(this.grid, this.grid_size, 748, 39, 2, 'right')
+        this.grid[740][25] = new Branch(this.grid, this.grid_size, 740, 25, 4, 'left')
+        this.grid[732][37] = new Branch(this.grid, this.grid_size, 732, 37, 3, 'right')
+        this.grid[730][30] = new Branch(this.grid, this.grid_size, 730, 30, 3, 'left')
+        this.grid[720][29] = new Branch(this.grid, this.grid_size, 720, 29, 4, 'left')
+        this.grid[710][40] = new Branch(this.grid, this.grid_size, 710, 40, 2, 'right')
+        this.grid[700][30] = new Branch(this.grid, this.grid_size, 700, 30, 4, 'left')
+
+        this.grid[690][40] = new Branch(this.grid, this.grid_size, 690, 40, 4, 'right')        
+        this.grid[685][24] = new Branch(this.grid, this.grid_size, 685, 24, 3, 'left')
+        this.grid[681][38] = new Branch(this.grid, this.grid_size, 681, 38, 2, 'right')
+        this.grid[673][27] = new Branch(this.grid, this.grid_size, 673, 27, 4, 'left')
+        this.grid[665][38] = new Branch(this.grid, this.grid_size, 665, 38, 4, 'right')
+        this.grid[660][26] = new Branch(this.grid, this.grid_size, 660, 26, 5, 'left')
+        this.grid[648][39] = new Branch(this.grid, this.grid_size, 648, 39, 2, 'right')
+        this.grid[640][25] = new Branch(this.grid, this.grid_size, 640, 25, 4, 'left')
+        this.grid[632][37] = new Branch(this.grid, this.grid_size, 632, 37, 3, 'right')
+        this.grid[630][30] = new Branch(this.grid, this.grid_size, 630, 30, 3, 'left')
+        this.grid[620][29] = new Branch(this.grid, this.grid_size, 620, 29, 4, 'left')
+        this.grid[610][40] = new Branch(this.grid, this.grid_size, 610, 40, 2, 'right')
+        this.grid[600][30] = new Branch(this.grid, this.grid_size, 600, 30, 4, 'left')
+
+        this.grid[590][40] = new Branch(this.grid, this.grid_size, 590, 40, 4, 'right')        
+        this.grid[585][24] = new Branch(this.grid, this.grid_size, 585, 24, 3, 'left')
+        this.grid[581][38] = new Branch(this.grid, this.grid_size, 581, 38, 2, 'right')
+        this.grid[573][27] = new Branch(this.grid, this.grid_size, 573, 27, 4, 'left')
+        this.grid[565][38] = new Branch(this.grid, this.grid_size, 565, 38, 4, 'right')
+        this.grid[560][26] = new Branch(this.grid, this.grid_size, 560, 26, 5, 'left')
+        this.grid[548][39] = new Branch(this.grid, this.grid_size, 548, 39, 2, 'right')
+        this.grid[540][25] = new Branch(this.grid, this.grid_size, 540, 25, 4, 'left')
+        this.grid[532][37] = new Branch(this.grid, this.grid_size, 532, 37, 3, 'right')
+        this.grid[530][30] = new Branch(this.grid, this.grid_size, 530, 30, 3, 'left')
+        this.grid[520][29] = new Branch(this.grid, this.grid_size, 520, 29, 4, 'left')
+        this.grid[510][40] = new Branch(this.grid, this.grid_size, 510, 40, 2, 'right')
+        this.grid[500][30] = new Branch(this.grid, this.grid_size, 500, 30, 4, 'left')
+
+        this.grid[490][40] = new Branch(this.grid, this.grid_size, 490, 40, 4, 'right')        
+        this.grid[485][24] = new Branch(this.grid, this.grid_size, 485, 24, 3, 'left')
+        this.grid[481][38] = new Branch(this.grid, this.grid_size, 481, 38, 2, 'right')
+        this.grid[473][27] = new Branch(this.grid, this.grid_size, 473, 27, 4, 'left')
+        this.grid[465][38] = new Branch(this.grid, this.grid_size, 465, 38, 4, 'right')
+        this.grid[460][26] = new Branch(this.grid, this.grid_size, 460, 26, 5, 'left')
+        this.grid[448][39] = new Branch(this.grid, this.grid_size, 448, 39, 2, 'right')
+        this.grid[440][25] = new Branch(this.grid, this.grid_size, 440, 25, 4, 'left')
+        this.grid[432][37] = new Branch(this.grid, this.grid_size, 432, 37, 3, 'right')
+        this.grid[430][30] = new Branch(this.grid, this.grid_size, 430, 30, 3, 'left')
+        this.grid[420][29] = new Branch(this.grid, this.grid_size, 420, 29, 4, 'left')
+        this.grid[410][40] = new Branch(this.grid, this.grid_size, 410, 40, 2, 'right')
+        this.grid[400][30] = new Branch(this.grid, this.grid_size, 400, 30, 4, 'left')
+
+        this.grid[390][40] = new Branch(this.grid, this.grid_size, 390, 40, 4, 'right')        
+        this.grid[385][24] = new Branch(this.grid, this.grid_size, 385, 24, 3, 'left')
+        this.grid[381][38] = new Branch(this.grid, this.grid_size, 381, 38, 2, 'right')
+        this.grid[373][27] = new Branch(this.grid, this.grid_size, 373, 27, 4, 'left')
+        this.grid[365][38] = new Branch(this.grid, this.grid_size, 365, 38, 4, 'right')
+        this.grid[360][26] = new Branch(this.grid, this.grid_size, 360, 26, 5, 'left')
+        this.grid[348][39] = new Branch(this.grid, this.grid_size, 348, 39, 2, 'right')
+        this.grid[340][25] = new Branch(this.grid, this.grid_size, 340, 25, 4, 'left')
+        this.grid[332][37] = new Branch(this.grid, this.grid_size, 332, 37, 3, 'right')
+        this.grid[330][30] = new Branch(this.grid, this.grid_size, 330, 30, 3, 'left')
+        this.grid[320][29] = new Branch(this.grid, this.grid_size, 320, 29, 4, 'left')
+        this.grid[310][40] = new Branch(this.grid, this.grid_size, 310, 40, 2, 'right')
+        this.grid[300][30] = new Branch(this.grid, this.grid_size, 300, 30, 4, 'left')
+
+        this.grid[290][40] = new Branch(this.grid, this.grid_size, 290, 40, 4, 'right')        
+        this.grid[285][24] = new Branch(this.grid, this.grid_size, 285, 24, 3, 'left')
+        this.grid[281][38] = new Branch(this.grid, this.grid_size, 281, 38, 2, 'right')
+        this.grid[273][27] = new Branch(this.grid, this.grid_size, 273, 27, 4, 'left')
+        this.grid[265][38] = new Branch(this.grid, this.grid_size, 265, 38, 4, 'right')
+        this.grid[260][26] = new Branch(this.grid, this.grid_size, 260, 26, 5, 'left')
+        this.grid[248][39] = new Branch(this.grid, this.grid_size, 248, 39, 2, 'right')
+        this.grid[240][25] = new Branch(this.grid, this.grid_size, 240, 25, 4, 'left')
+        this.grid[232][37] = new Branch(this.grid, this.grid_size, 232, 37, 3, 'right')
+        this.grid[230][30] = new Branch(this.grid, this.grid_size, 230, 30, 3, 'left')
+        this.grid[220][29] = new Branch(this.grid, this.grid_size, 220, 29, 4, 'left')
+        this.grid[210][40] = new Branch(this.grid, this.grid_size, 210, 40, 2, 'right')
+        this.grid[200][30] = new Branch(this.grid, this.grid_size, 200, 30, 4, 'left')
+
+        this.grid[190][40] = new Branch(this.grid, this.grid_size, 190, 40, 4, 'right')        
+        this.grid[185][24] = new Branch(this.grid, this.grid_size, 185, 24, 3, 'left')
+        this.grid[181][38] = new Branch(this.grid, this.grid_size, 181, 38, 2, 'right')
+        this.grid[173][27] = new Branch(this.grid, this.grid_size, 173, 27, 4, 'left')
+        this.grid[165][38] = new Branch(this.grid, this.grid_size, 165, 38, 4, 'right')
+        this.grid[160][26] = new Branch(this.grid, this.grid_size, 160, 26, 5, 'left')
+        this.grid[148][39] = new Branch(this.grid, this.grid_size, 148, 39, 2, 'right')
+        this.grid[140][25] = new Branch(this.grid, this.grid_size, 140, 25, 4, 'left')
+        this.grid[132][37] = new Branch(this.grid, this.grid_size, 132, 37, 3, 'right')
+        this.grid[130][30] = new Branch(this.grid, this.grid_size, 130, 30, 3, 'left')
+        this.grid[120][29] = new Branch(this.grid, this.grid_size, 120, 29, 4, 'left')
+        this.grid[110][40] = new Branch(this.grid, this.grid_size, 110, 40, 2, 'right')
+        this.grid[100][30] = new Branch(this.grid, this.grid_size, 100, 30, 4, 'left')
+
+        this.grid[90][40] = new Branch(this.grid, this.grid_size, 90, 40, 4, 'right')        
+        this.grid[85][24] = new Branch(this.grid, this.grid_size, 85, 24, 3, 'left')
+        this.grid[81][38] = new Branch(this.grid, this.grid_size, 81, 38, 2, 'right')
+        this.grid[73][27] = new Branch(this.grid, this.grid_size, 73, 27, 4, 'left')
+        this.grid[65][38] = new Branch(this.grid, this.grid_size, 65, 38, 4, 'right')
+        this.grid[60][26] = new Branch(this.grid, this.grid_size, 60, 26, 5, 'left')
+        this.grid[48][39] = new Branch(this.grid, this.grid_size, 48, 39, 2, 'right')
+        this.grid[40][25] = new Branch(this.grid, this.grid_size, 40, 25, 4, 'left')
+        this.grid[32][37] = new Branch(this.grid, this.grid_size, 32, 37, 3, 'right')
+        this.grid[30][30] = new Branch(this.grid, this.grid_size, 30, 30, 3, 'left')
+        this.grid[20][29] = new Branch(this.grid, this.grid_size, 20, 29, 4, 'left')
     }
 
     display_grid(){
@@ -64,6 +163,7 @@ class Level{
     display_trunk(){
         imageMode(CORNER)
         image(images.trunk, this.trunk_x, this.trunk_y1)
+        image(images.trunk, this.trunk_x, this.trunk_y2)
     }
 
     display_all(){
@@ -120,7 +220,7 @@ class Level{
     place_squirrel(){
         for(let col = this.visible_grid_height - 1; col > 0; col -= 1){
             for(let row = 0; row < this.grid_width; row ++){
-                if(this.grid[floor(this.grid_view) + col][row] instanceof Branch){
+                if(this.grid[floor(this.grid_view) + col][row] instanceof Branch && col < 0.75 * this.visible_grid_height){
                     let branch = this.grid[floor(this.grid_view) + col][row]
                     let center_row = (branch.direction === "right") ? branch.row + (branch.size * branch.angle)/2 : branch.row - (branch.size * branch.angle)/2
                     let center_x = center_row * this.grid_size + this.x_offset
@@ -159,7 +259,17 @@ class Level{
         }
         else{
             if(this.squirrel.y > 0.5 * innerHeight) {this.squirrel.y += this.squirrel.y_speed}
-            else{this.grid_view += this.squirrel.y_speed/this.grid_size}
+            else{
+                this.grid_view += this.squirrel.y_speed/this.grid_size
+                this.trunk_y1 += abs(this.squirrel.y_speed)
+                this.trunk_y2 += abs(this.squirrel.y_speed)
+                if(this.trunk_y2 >= innerHeight){
+                    this.trunk_y1 = - innerHeight
+                    this.trunk_y2 = 0
+                }
+            }
+           
+
         }
         
         if(this.squirrel.facing === "right") {image(images.squirrel.right.jump[0], this.squirrel.x, this.squirrel.y)}

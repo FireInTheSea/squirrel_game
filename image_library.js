@@ -23,7 +23,7 @@ class Image_Library{
     resize_images(){
         this.full_life.resize(0.03 * innerHeight, 0.03 * innerHeight)
         this.empty_life.resize(0.03 * innerHeight, 0.03 * innerHeight)
-        this.trunk.resize( 0.4 * innerHeight, 5 * innerHeight)
+        this.trunk.resize( 0.4 * innerHeight, innerHeight)
         this.resize_branch_images()
         this.resize_jump_images()
         this.resize_stand_images()
@@ -65,8 +65,8 @@ class Image_Library{
 
     resize_branch_images(){
         for(let i = 2; i <= 6; i ++){
-            this.branches.right[i].resize( 0.019 * innerHeight * i * 5 * 1.06, 0.02 * innerHeight * i * 1.1)
-            this.branches.left[i].resize( 0.019 * innerHeight * i * 5 * 1.06, 0.02 * innerHeight * i * 1.1)
+            this.branches.right[i].resize(0.019 * innerHeight * i * 5 * 1.06, 0.02 * innerHeight * i * 1.1)
+            this.branches.left[i].resize(0.019 * innerHeight * i * 5 * 1.06, 0.02 * innerHeight * i * 1.1)
         }
     }
 
