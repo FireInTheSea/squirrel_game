@@ -1,5 +1,8 @@
 class Level{
     constructor(grid_height){
+        this.trunk_x = innerWidth/2 - images.trunk.width/2
+        this.trunk_y1 = 0
+        this.trunk_y2 = images.trunk.height - 1
         this.lives = 3
         this.state = "level"
         this.grid_height = grid_height
@@ -22,12 +25,16 @@ class Level{
     }
 
     load_level1(){
-        this.grid[745][10] = new Branch(this.grid, this.grid_size, 745, 10, 6, 'right')
-        this.grid[755][10] = new Branch(this.grid, this.grid_size, 755, 10, 5, 'right')
-        this.grid[765][10] = new Branch(this.grid, this.grid_size, 765, 10, 4, 'right')
-        this.grid[775][10] = new Branch(this.grid, this.grid_size, 775, 10, 3, 'right')
-        this.grid[785][10] = new Branch(this.grid, this.grid_size, 785, 10, 2, 'right')
-
+        this.grid[735][40] = new Branch(this.grid, this.grid_size, 735, 40, 6, 'right')
+        this.grid[750][40] = new Branch(this.grid, this.grid_size, 750, 40, 5, 'right')
+        this.grid[763][38] = new Branch(this.grid, this.grid_size, 763, 38, 3, 'right')
+        this.grid[775][40] = new Branch(this.grid, this.grid_size, 775, 40, 4, 'right')
+        this.grid[785][40] = new Branch(this.grid, this.grid_size, 785, 40, 2, 'right')
+        this.grid[725][30] = new Branch(this.grid, this.grid_size, 725, 30, 2, 'left')
+        this.grid[740][27] = new Branch(this.grid, this.grid_size, 740, 27, 5, 'left')
+        this.grid[765][33] = new Branch(this.grid, this.grid_size, 765, 33, 4, 'left')
+        this.grid[775][25] = new Branch(this.grid, this.grid_size, 775, 25, 3, 'left')
+        this.grid[785][15] = new Branch(this.grid, this.grid_size, 785, 15, 2, 'left')
     }
 
     display_grid(){
@@ -40,7 +47,7 @@ class Level{
         }
     }
 
-    display_objects(){
+    display_branches(){
         for(let col = 0; col < this.visible_grid_height; col ++){
             for(let row = 0; row < this.grid_width; row ++){
                 if(this.grid[floor(this.grid_view) + col][row] instanceof Branch){
@@ -54,9 +61,15 @@ class Level{
         }
     }
 
+    display_trunk(){
+        imageMode(CORNER)
+        image(images.trunk, this.trunk_x, this.trunk_y1)
+    }
+
     display_all(){
         //this.display_grid()
-        this.display_objects()
+        this.display_trunk()
+        this.display_branches()
     }
 
     get_coords_by_px(x_px, y_px){  // DEPRICATED?
@@ -298,7 +311,7 @@ class Level{
     
     run(){
         for(let q = 0; q < 10; q ++){
-            this.get_y_plot(500, this.grid[785][10])
+            //this.get_y_plot(500, this.grid[785][10])
         }
         this.display_all()
 

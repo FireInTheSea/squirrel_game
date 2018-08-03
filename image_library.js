@@ -14,6 +14,7 @@ class Image_Library{
     load_images(){
         this.full_life = loadImage("images/full_life.png")
         this.empty_life = loadImage("images/empty_life.png")
+        this.trunk = loadImage("images/tree/trunk.png")
         this.load_branch_images()
         this.load_jump_images()
         this.load_stand_images()
@@ -22,6 +23,7 @@ class Image_Library{
     resize_images(){
         this.full_life.resize(0.03 * innerHeight, 0.03 * innerHeight)
         this.empty_life.resize(0.03 * innerHeight, 0.03 * innerHeight)
+        this.trunk.resize( 0.4 * innerHeight, 5 * innerHeight)
         this.resize_branch_images()
         this.resize_jump_images()
         this.resize_stand_images()
@@ -63,8 +65,8 @@ class Image_Library{
 
     resize_branch_images(){
         for(let i = 2; i <= 6; i ++){
-            this.branches.right[i].resize( 0.019 * innerHeight * i * 5, 0.02 * innerHeight * i)
-            this.branches.left[i].resize( 0.019 * innerHeight * i * 5, 0.02 * innerHeight * i)
+            this.branches.right[i].resize( 0.019 * innerHeight * i * 5 * 1.06, 0.02 * innerHeight * i * 1.1)
+            this.branches.left[i].resize( 0.019 * innerHeight * i * 5 * 1.06, 0.02 * innerHeight * i * 1.1)
         }
     }
 
